@@ -71,6 +71,7 @@ function loadData() {
     var shortYear = String(Year).slice(-2);
     $("#NYD1,#NYD2,#NYD3").html(`${shortYear}年${calendarMonth}月电量实际（1000kwh）`)
     $("#NYD18_1").html(`18年${calendarMonth}月电量实际（1000kwh）`)
+    $("#NYD18_1_1").html(`18年${calendarMonth}月电量实际（1000kwh）`)
     $("#NYD18_2").html(`18年${calendarMonth}月水量目标（T）`)
     $("#NYD1_1,#NYD2_1,#NYD3_1").html(`${shortYear}年${calendarMonth}月电量目标（1000kwh）`)
     $("#NYS1,#NYS2,#NYS3").html(`${shortYear}年${calendarMonth}月水量实际（T）`) 
