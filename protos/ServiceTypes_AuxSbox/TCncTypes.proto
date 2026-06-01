@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package smt_iot.v1.aux;
+
+import "google/protobuf/timestamp.proto";
+
+enum TimeBin
+{
+  TIMEBIN_UNSPECIFIED = 0;
+  MINUTE = 1;
+  HOUR = 2;
+  DAY = 3;
+  MONTH = 4;
+  YEAR = 5;
+}
+
+message CncUtilizationTypeRequest
+{
+  bool connected_percent = 1;
+  bool running_percent = 2;
+  bool error_percent = 3;
+}
+
+message CncUtilization
+{
+  string cnc_uid = 1;
+  repeated float connected_percent = 2;
+  repeated float running_percent = 3;
+  repeated float error_percent = 4;
+}
+
+enum CncStatus
+{
+  UNKNOWN = 0;
+  DISCONNECTED = 1;
+  IDLE = 2;
+  RUNNING = 3;
+  ERROR = 4;
+}
+
+message CncStatusEvent
+{
+  google.protobuf.Timestamp start_time = 1;
+  google.protobuf.Timestamp end_time = 2;
+  CncStatus cnc_status = 3;
+}
+
+message CncStatusHistory
+{
+  string cnc_uid = 1;
+  repeated CncStatusEvent status_history = 2;
+}
+
+message CncIdentity
+{
+  string cnc_uid = 1;
+  string cnc_name = 2;
+}
+
+message CncCurrentStatusItem
+{
+  string cnc_uid = 1;
+  CncStatus cnc_status = 2;
+}

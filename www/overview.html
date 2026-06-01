@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>设备总览示意图</title>
+  <link rel="stylesheet" href="./css/Nav.css">
+  <link rel="stylesheet" href="./css/header.css">
+  <link rel="stylesheet" href="./css/overview.css">
+  <script src="./js/jquery.min.js"></script>
+  <script src="./js/overview.js"></script>
+  <script src="./js/Nav.js"></script>
+  <script src="./js/echarts.min.js"></script>
+</head>
+<body>
+  <div id="header">
+      <div id="TopBox_left">
+          <button class="icon-button" id="menu-button" type="button" aria-label="打开菜单">
+              <img class="icon-image icon-image-menu" src="./img/menu.svg" alt="" />
+          </button>
+      </div>
+      <div id="Header" style="    display: flex;
+      justify-content: space-between;
+      align-content: center;
+      width: 100%; position: relative;">
+        <h1 id="HeaderTitle">设备总览示意图</h1>
+        <div onclick="Edit()" id="editButton">编辑</div>
+      </div>
+
+  </div>
+  <div class="dashboard-shell water-monthly-shell">
+    <div class="overview-content">
+      <div class="overview-floorplan-frame">
+        <div class="overview-floorplan-canvas" id="overview-floorplan-canvas">
+            <div class="overview-floor-surface overview-floor-surface-training" aria-hidden="true"></div>
+            <div class="overview-floor-surface overview-floor-surface-hot-main" aria-hidden="true"></div>
+            <div class="overview-floor-surface overview-floor-surface-hot-top" aria-hidden="true"></div>
+            <div class="overview-floor-surface overview-floor-surface-hot-left" aria-hidden="true"></div>
+            <div class="overview-floor-surface overview-floor-surface-grinding-left" aria-hidden="true"></div>
+            <div class="overview-floor-surface overview-floor-surface-grinding-main" aria-hidden="true"></div>
+            <div class="overview-floor-surface overview-floor-surface-electrical" aria-hidden="true"></div>
+            <div class="overview-floor-surface overview-floor-surface-front" aria-hidden="true"></div>
+            <h3 class="overview-zone-label overview-zone-label-grinding">研磨工程</h3>
+            <h3 class="overview-zone-label overview-zone-label-hot">热处理</h3>
+            <h3 class="overview-zone-label overview-zone-label-training">教育训练</h3>
+            <h3 class="overview-zone-label overview-zone-label-front">前工程</h3>
+            <h3 class="overview-zone-label overview-zone-label-electrical">电气工程</h3>
+            <div id="MachineBox">
+              
+            </div>
+            <span class="refresh-info">刷新频率：1分钟，当前刷新次数：<span id="freq">1</span></span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+    <!-- 弹窗 -->
+  <div id="machine-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="modal-title" id="modal-title">设备详情</span>
+        <button class="modal-close-btn" onclick="closeModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <iframe id="machine-iframe"></iframe>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+
+
+

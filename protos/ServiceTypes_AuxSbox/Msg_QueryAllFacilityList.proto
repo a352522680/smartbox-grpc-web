@@ -1,0 +1,14 @@
+// Message(s) for QueryAllFacilityList
+
+syntax = "proto3";
+
+package smt_iot.v1.aux;
+
+import "ReusableTypes_Common/TIotStatus.proto";
+import "ServiceTypes_AuxSbox/TUtilityTypes.proto";
+
+message QueryAllFacilityListResponse
+{
+  iot_common.v1.IotStatus iot_status = 1;
+  repeated FacilityIdentity facility_list = 2;
+}

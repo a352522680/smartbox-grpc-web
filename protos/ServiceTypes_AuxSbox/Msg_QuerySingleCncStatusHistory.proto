@@ -1,0 +1,23 @@
+// Message(s) for QuerySingleCncStatusHistory
+
+syntax = "proto3";
+
+package smt_iot.v1.aux;
+
+import "google/protobuf/timestamp.proto";
+
+import "ReusableTypes_Common/TIotStatus.proto";
+import "ServiceTypes_AuxSbox/TCncTypes.proto";
+
+message QuerySingleCncStatusHistoryRequest
+{
+  string cnc_uid = 1;
+  google.protobuf.Timestamp start_time = 2;
+  google.protobuf.Timestamp end_time = 3;
+}
+
+message QuerySingleCncStatusHistoryResponse
+{
+  iot_common.v1.IotStatus iot_status = 1;
+  CncStatusHistory cnc_status_history = 2;
+}

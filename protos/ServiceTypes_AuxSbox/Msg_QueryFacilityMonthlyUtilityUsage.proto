@@ -1,0 +1,29 @@
+// Message(s) for QueryFacilityMonthlyUtilityUsage
+
+syntax = "proto3";
+
+package smt_iot.v1.aux;
+
+import "google/protobuf/timestamp.proto";
+
+import "ReusableTypes_Common/TIotStatus.proto";
+import "ServiceTypes_AuxSbox/TUtilityTypes.proto";
+
+message QueryFacilityMonthlyUtilityUsageRequest
+{
+  // If facility_uids is empty, the service should return data for all facilities.
+  repeated string facility_uids = 1;
+  UtilityTypeRequest utility_type_request = 2;
+
+  // start_month must be aligned to month precision.
+  google.protobuf.Timestamp start_month = 3;
+
+  // Invalid when negative. Max 120 months inclusive of start_month.
+  int32 total_months = 4;
+}
+
+message QueryFacilityMonthlyUtilityUsageResponse
+{
+  iot_common.v1.IotStatus iot_status = 1;
+  repeated FacilityUtilityUsage facility_utility_usage_list = 2;
+}

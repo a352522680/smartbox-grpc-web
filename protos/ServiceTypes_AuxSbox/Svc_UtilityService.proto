@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package smt_iot.v1.aux;
+
+import "google/protobuf/empty.proto";
+
+import "ServiceTypes_AuxSbox/Msg_QueryAllFacilityList.proto";
+import "ServiceTypes_AuxSbox/Msg_QueryFacilityDailyUtilityUsage.proto";
+import "ServiceTypes_AuxSbox/Msg_QueryFacilityMonthlyUtilityUsage.proto";
+import "ServiceTypes_AuxSbox/Msg_QueryFacilityWorkYearlyUtilityUsage.proto";
+import "ServiceTypes_AuxSbox/Msg_FullQueryForUtilityMonitoringDashboard_0001001.proto";
+
+service UtilityService
+{
+  rpc QueryAllFacilityList(google.protobuf.Empty) returns (QueryAllFacilityListResponse) {}
+  rpc QueryFacilityDailyUtilityUsage(QueryFacilityDailyUtilityUsageRequest) returns (QueryFacilityDailyUtilityUsageResponse) {}
+  rpc QueryFacilityMonthlyUtilityUsage(QueryFacilityMonthlyUtilityUsageRequest) returns (QueryFacilityMonthlyUtilityUsageResponse) {}
+  rpc QueryFacilityWorkYearlyUtilityUsage(QueryFacilityWorkYearlyUtilityUsageRequest) returns (QueryFacilityWorkYearlyUtilityUsageResponse) {}
+  rpc FullQueryForUtilityMonitoringDashboard_0001001(google.protobuf.Empty) returns (FullQueryForUtilityMonitoringDashboard_0001001Response) {}
+}

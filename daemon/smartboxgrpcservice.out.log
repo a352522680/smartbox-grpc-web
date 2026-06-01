@@ -1,0 +1,31 @@
+0.0.0.0:60080
+Created new gRPC client for target: 10.220.86.115:50151
+2026-03-25 09:19:58 info: ChartApi: QueryHistoricalEvent return OK took 0.063 secs (args:  start=2026-03-25 00:00:00, end=2026-03-26 00:00:00)
+2026-03-25 09:19:58 info: QueryEfficiency 0.074 secs (args:  start=2026-03-25 00:00:00, end=2026-03-26 00:00:00), target = 10.220.86.115:50151
+2026-03-25 09:19:58 debug: 返回数据给前端
+2026-03-25 09:19:58 info: ChartApi: QueryHistoricalBar return OK took 0.082 secs (args:  start=2026-03-25 00:00:00, end=2026-03-26 00:00:00)
+2026-03-25 09:19:58 info: QueryChangeRecord 0.093 secs (args:  start=2026-03-25 00:00:00, end=2026-03-26 00:00:00), target = 10.220.86.115:50151
+2026-03-25 09:19:58 debug: 返回数据给前端
+2026-03-25 09:19:58 info: QueryUsagePeriod 0.107 secs (args:  start=2026-03-25 00:00:00, end=2026-03-26 00:00:00), target = 10.220.86.115:50151
+2026-03-25 09:19:58 debug: 返回数据给前端
+2026-03-25 09:19:58 info: ChartApi: QueryHistoricalGraph return OK took 0.145 secs (args:  start=2026-03-25 00:00:00, end=2026-03-26 00:00:00)
+2026-03-25 09:19:58 info: QueryHistoricalBar 0.136 secs (args:  start=2026-03-25 00:00:00, end=2026-03-26 00:00:00), target = 10.220.86.115:50151
+2026-03-25 09:19:58 debug: 返回数据给前端
+2026-03-25 09:20:08 debug: 开始尝试取消之前 (Wed Mar 25 2026 09:19:58 GMT+0800 (中国标准时间)) 可能未完成 QueryEfficiency 对象 IP: 10.220.86.115, args: start=2026-03-25 00:00:00, end=2026-03-26 00:00:00
+2026-03-25 09:20:08 debug: 开始尝试取消之前 (Wed Mar 25 2026 09:19:58 GMT+0800 (中国标准时间)) 可能未完成 QueryUsagePeriod 对象 IP: 10.220.86.115, args: start=2026-03-25 00:00:00, end=2026-03-26 00:00:00
+2026-03-25 09:20:08 debug: ChartApi: 开始尝试取消之前 (Wed Mar 25 2026 09:19:58 GMT+0800 (中国标准时间)) 可能未完成 QueryHistoricalEvent 对象 IP: 10.220.86.115, args: start=2026-03-25 00:00:00, end=2026-03-26 00:00:00
+2026-03-25 09:20:08 debug: ChartApi: 开始尝试取消之前 (Wed Mar 25 2026 09:19:58 GMT+0800 (中国标准时间)) 可能未完成 QueryHistoricalBar 对象 IP: 10.220.86.115, args: start=2026-03-25 00:00:00, end=2026-03-26 00:00:00
+2026-03-25 09:20:08 debug: ChartApi: 开始尝试取消之前 (Wed Mar 25 2026 09:19:58 GMT+0800 (中国标准时间)) 可能未完成 QueryHistoricalGraph 对象 IP: 10.220.86.115, args: start=2026-03-25 00:00:00, end=2026-03-26 00:00:00
+2026-03-25 09:20:08 debug: 开始尝试取消之前 (Wed Mar 25 2026 09:19:58 GMT+0800 (中国标准时间)) 可能未完成 QueryChangeRecord 对象 IP: 10.220.86.115, args: start=2026-03-25 00:00:00, end=2026-03-26 00:00:00
+2026-03-25 09:20:08 debug: 开始尝试取消之前 (Wed Mar 25 2026 09:19:58 GMT+0800 (中国标准时间)) 可能未完成 QueryHistoricalBar 对象 IP: 10.220.86.115, args: start=2026-03-25 00:00:00, end=2026-03-26 00:00:00
+2026-03-25 09:20:08 info: ChartApi: QueryHistoricalEvent return OK took 0.025 secs (args:  start=2026-03-25 00:00:00, end=2026-03-26 00:00:00)
+2026-03-25 09:20:08 info: QueryEfficiency 0.043 secs (args:  start=2026-03-25 00:00:00, end=2026-03-26 00:00:00), target = 10.220.86.115:50151
+2026-03-25 09:20:08 debug: 返回数据给前端
+2026-03-25 09:20:08 info: QueryUsagePeriod 0.051 secs (args:  start=2026-03-25 00:00:00, end=2026-03-26 00:00:00), target = 10.220.86.115:50151
+2026-03-25 09:20:08 debug: 返回数据给前端
+2026-03-25 09:20:08 info: ChartApi: QueryHistoricalBar return OK took 0.063 secs (args:  start=2026-03-25 00:00:00, end=2026-03-26 00:00:00)
+2026-03-25 09:20:08 info: QueryChangeRecord 0.07 secs (args:  start=2026-03-25 00:00:00, end=2026-03-26 00:00:00), target = 10.220.86.115:50151
+2026-03-25 09:20:08 debug: 返回数据给前端
+2026-03-25 09:20:08 info: ChartApi: QueryHistoricalGraph return OK took 0.089 secs (args:  start=2026-03-25 00:00:00, end=2026-03-26 00:00:00)
+2026-03-25 09:20:08 info: QueryHistoricalBar 0.092 secs (args:  start=2026-03-25 00:00:00, end=2026-03-26 00:00:00), target = 10.220.86.115:50151
+2026-03-25 09:20:08 debug: 返回数据给前端

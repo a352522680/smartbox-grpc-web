@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package iot_common.v1;
+
+message AttribValuePair
+{
+  string attribute = 1;
+  string value = 2;
+}

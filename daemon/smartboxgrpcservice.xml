@@ -1,0 +1,31 @@
+<service>
+	<id>smartboxgrpcservice.exe</id>
+	<name>SmartBox GRPC Service</name>
+	<description>SmartBox GRPC Web 服务</description>
+	<executable>D:\Nodejs\node.exe</executable>
+	<argument>--harmony</argument>
+	<argument>D:\NewWork\GRPC页面\GRPC-WEB\smartbox-grpc-web-master@1ae4c16297f\node_modules\node-windows\lib\wrapper.js</argument>
+	<argument>--file</argument>
+	<argument>D:\NewWork\GRPC页面\GRPC-WEB\smartbox-grpc-web-master@1ae4c16297f\index.js</argument>
+	<argument>--scriptoptions=</argument>
+	<argument>--log</argument>
+	<argument>SmartBox GRPC Service wrapper</argument>
+	<argument>--grow</argument>
+	<argument>0.25</argument>
+	<argument>--wait</argument>
+	<argument>1</argument>
+	<argument>--maxrestarts</argument>
+	<argument>3</argument>
+	<argument>--abortonerror</argument>
+	<argument>n</argument>
+	<argument>--stopparentfirst</argument>
+	<argument>undefined</argument>
+	<logmode>rotate</logmode>
+	<stoptimeout>30sec</stoptimeout>
+	<serviceaccount>
+		<domain>LAPTOP-OIF84BLP</domain>
+		<user>LocalSystem</user>
+		<password></password>
+	</serviceaccount>
+	<workingdirectory>D:\NewWork\GRPC页面\GRPC-WEB\smartbox-grpc-web-master@1ae4c16297f</workingdirectory>
+</service>

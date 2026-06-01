@@ -1,0 +1,14 @@
+// Message(s) for FullQueryForUtilityMonitoringDashboard_0001001
+
+syntax = "proto3";
+
+package smt_iot.v1.aux;
+
+import "ReusableTypes_Common/TIotStatus.proto";
+import "ServiceTypes_AuxSbox/TUtilityTypes.proto";
+
+message FullQueryForUtilityMonitoringDashboard_0001001Response
+{
+  iot_common.v1.IotStatus iot_status = 1;
+  UtilityDashboardData_0001001 utility_dashboard_data = 2;
+}

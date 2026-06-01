@@ -1,0 +1,20 @@
+// Message(s) for QueryCncCurrentStatus
+
+syntax = "proto3";
+
+package smt_iot.v1.aux;
+
+import "ReusableTypes_Common/TIotStatus.proto";
+import "ServiceTypes_AuxSbox/TCncTypes.proto";
+
+message QueryCncCurrentStatusRequest
+{
+  // If cnc_uids is empty, the service should return statuses for all CNCs.
+  repeated string cnc_uids = 1;
+}
+
+message QueryCncCurrentStatusResponse
+{
+  iot_common.v1.IotStatus iot_status = 1;
+  repeated CncCurrentStatusItem cnc_status_list = 2;
+}

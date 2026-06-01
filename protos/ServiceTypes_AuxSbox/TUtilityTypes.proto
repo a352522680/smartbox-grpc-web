@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package smt_iot.v1.aux;
+
+import "google/protobuf/timestamp.proto";
+
+message UtilityUsage
+{
+  float energy_usage = 1; // kWh
+  float water_usage = 2; // m^3
+  float air_usage = 3; // Nm^3
+  float energy_usage_illum = 4; // kWh: illumination only
+  float reference_energy_usage = 5; // kWh: reference work year
+  float reference_water_usage = 6; // m^3: reference work year
+  float reference_air_usage = 7; // Nm^3: reference work year
+  float reference_energy_usage_illum = 8; // kWh: reference work year illumination only
+}
+
+message UtilityTypeRequest
+{
+  bool energy = 1;
+  bool water = 2;
+  bool air = 3;
+}
+
+message UtilityUsageByDay
+{
+  google.protobuf.Timestamp day = 1;
+  reserved 2;
+  reserved 3;
+  float energy_usage = 4; // kWh
+  float water_usage = 5; // m^3
+  float air_usage = 6; // Nm^3
+  float energy_usage_illum = 7; // kWh: illumination only
+}
+
+message UtilityUsageByMonth
+{
+  int32 work_year = 1;
+  int32 current_year = 2;
+  int32 current_month = 3;
+  float energy_usage = 4; // kWh
+  float water_usage = 5; // m^3
+  float air_usage = 6; // Nm^3
+  float reference_energy_usage = 7; // kWh: reference work year
+  float reference_water_usage = 8; // m^3: reference work year
+  float reference_air_usage = 9; // Nm^3: reference work year
+  float reference_energy_usage_illum = 10; // kWh: reference work year illumination only
+  float energy_usage_illum = 11; // kWh: illumination only
+}
+
+message UtilityUsageByWorkYear
+{
+  int32 work_year = 1;
+  float energy_usage = 2; // kWh
+  float water_usage = 3; // m^3
+  float air_usage = 4; // Nm^3
+  float energy_usage_illum = 5; // kWh: illumination only
+}
+
+message FacilityUtilityUsage
+{
+  string facility_uid = 1;
+  repeated UtilityUsage utility_usage = 2;
+}
+
+message FacilityUtilityUsageByDay
+{
+  string facility_uid = 1;
+  repeated UtilityUsageByDay utility_usage_by_day = 2;
+}
+
+message UtilityDashboardData_0001001
+{
+  google.protobuf.Timestamp today = 1;
+  int32 workyear = 2;
+  repeated FacilityUtilityUsage facility_utility_usage_cur_month = 3;
+  UtilityUsage all_ave_mthly_utility_usage_cur_workyear = 4;
+  repeated UtilityUsageByMonth all_monthly_utility_usage_last3mths = 5;
+  repeated UtilityUsageByWorkYear all_workyearly_utility_usage = 6;
+  repeated UtilityUsageByDay all_daily_utility_usage_cur_month = 7;
+  repeated FacilityUtilityUsageByDay facility_daily_utility_usage_cur_month = 8;
+}
+
+message FacilityIdentity
+{
+  string facility_uid = 1;
+  string facility_name = 2;
+}

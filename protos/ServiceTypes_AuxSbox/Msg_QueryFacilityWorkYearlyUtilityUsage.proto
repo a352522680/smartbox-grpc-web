@@ -1,0 +1,27 @@
+// Message(s) for QueryFacilityWorkYearlyUtilityUsage
+
+syntax = "proto3";
+
+package smt_iot.v1.aux;
+
+import "ReusableTypes_Common/TIotStatus.proto";
+import "ServiceTypes_AuxSbox/TUtilityTypes.proto";
+
+message QueryFacilityWorkYearlyUtilityUsageRequest
+{
+  // If facility_uids is empty, the service should return data for all facilities.
+  repeated string facility_uids = 1;
+  UtilityTypeRequest utility_type_request = 2;
+
+  // Invalid when the year is not supported by the service.
+  int32 start_year = 3;
+
+  // Invalid when negative. Max 100 years inclusive of start_year.
+  int32 total_years = 4;
+}
+
+message QueryFacilityWorkYearlyUtilityUsageResponse
+{
+  iot_common.v1.IotStatus iot_status = 1;
+  repeated FacilityUtilityUsage facility_utility_usage_list = 2;
+}

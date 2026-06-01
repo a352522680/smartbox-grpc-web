@@ -1,0 +1,361 @@
+/* ===== 全局样式 ===== */
+.hidden {
+    display: none !important;
+}
+* {
+    box-sizing: border-box;
+}
+/* ===== 侧边导航菜单相关 CSS ===== */
+
+.nav-overlay {
+    position: absolute;
+    background: rgba(19, 27, 47, 0.7);
+    z-index: 40;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    right: 0;
+    margin: auto;
+}
+
+.nav-drawer {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: min(350px, 88vw);
+    height: 100%;
+    padding: 15px 29px;
+    background: #fff;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.25);
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    gap: 10px;
+}
+
+.nav-drawer-header {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 0 10px;
+    border-radius: 10px;
+}
+
+.nav-drawer-menu-button {
+    width: 36px;
+    height: 36px;
+    border: 0;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    cursor: pointer;
+}
+
+.nav-drawer-menu-button:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+    transition: all 0.2s ease;
+}
+
+.nav-drawer-menu-button:active {
+    transform: scale(0.95);
+}
+
+.nav-drawer-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+}
+
+.nav-drawer-pages {
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-right: 6px;
+}
+
+/* 2级导航分组 */
+.nav-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.nav-group-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 48px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: 10px;
+    text-align: left;
+    text-decoration: none;
+    font: inherit;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #314264;
+    color: #ffffff;
+}
+
+.nav-group-title:hover {
+    background: #3d4b6c;
+}
+
+.nav-group-arrow {
+    transition: transform 0.2s ease;
+    font-size: 14px;
+}
+
+.nav-group.is-open .nav-group-arrow {
+    transform: rotate(180deg);
+}
+
+.nav-group-items {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    padding-left: 12px;
+}
+
+.nav-group.is-open .nav-group-items {
+    display: flex;
+}
+
+/* 2级导航中的页面按钮 */
+.nav-group-items .nav-page-button {
+    min-height: 42px;
+    font-size: 17px;
+    background: #ffffff;
+    border: 1px solid #e8ecf1;
+    border-radius: 8px;
+    color: #495057;
+    padding-left: 14px;
+}
+
+.nav-group-items .nav-page-button:hover {
+    background: #f8f9fa;
+    border-color: #314264;
+}
+
+.nav-group-items .nav-page-button.is-active {
+    background: #314264;
+    border-color: #314264;
+    color: #ffffff;
+}
+
+.nav-page-button-text {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-page-button-icon {
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 自定义滚动条 */
+.nav-drawer-pages::-webkit-scrollbar {
+    width: 4px;
+}
+
+.nav-drawer-pages::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.nav-drawer-pages::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.nav-drawer-pages::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* ===== .nav-page-button 完整样式 ===== */
+
+.nav-page-button {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: 10px;
+    text-align: left;
+    text-decoration: none;
+    font: inherit;
+    font-size: 20px;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    color: #000;
+}
+
+.nav-page-button:hover {
+    background: #f3f3f3;
+    transform: translateX(4px);
+}
+
+.nav-page-button:active {
+    transform: translateX(2px) scale(0.98);
+}
+
+.nav-page-button:focus-visible {
+    outline: 2px solid #eacc2f;
+    outline-offset: 2px;
+}
+
+.nav-page-button.is-active {
+    background: #314264;
+    color: #ffffff;
+    cursor: default;
+    pointer-events: none;
+}
+
+.nav-drawer-footer {
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    display: grid;
+    gap: 14px;
+}
+
+.nav-user-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.nav-user-avatar {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #d8dbe4;
+    color: #24304b;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.nav-user-name {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.nav-logout-button {
+    min-height: 36px;
+    border: 0;
+    border-radius: 10px;
+    background: #e65050;
+    color: #ffffff;
+    font: inherit;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.nav-logout-button:hover {
+    background: #ff6b6b;
+    transform: translateY(-1px);
+}
+
+.nav-logout-button:active {
+    transform: translateY(1px);
+}
+
+.icon-image {
+    display: block;
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.icon-image-menu {
+    width: 22px;
+    height: 22px;
+    filter: brightness(0) saturate(100%);
+}
+
+.icon-button {
+    width: 38px;
+    padding: 0;
+}
+
+.toolbar-button,
+.icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 41px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.toolbar-button,
+.toolbar-field,
+.icon-button {
+    border: 1px solid transparent;
+    background: #fff;
+    color: #eeeeee;
+    transition: transform 140ms ease, background-color 140ms ease, border-color 140ms ease;
+}
+
+@media (max-width: 768px) {
+    .nav-drawer {
+        width: 85vw;
+        padding: 12px 20px;
+    }
+    
+    .nav-drawer-title {
+        font-size: 20px;
+    }
+    
+    .nav-group-title {
+        font-size: 16px;
+        min-height: 44px;
+    }
+    
+    .nav-page-button {
+        font-size: 16px;
+        min-height: 44px;
+    }
+    
+    .nav-group-items .nav-page-button {
+        font-size: 15px;
+        min-height: 40px;
+    }
+    
+    .nav-user-avatar {
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+    }
+    
+    .nav-user-name {
+        font-size: 16px;
+    }
+    
+    .nav-logout-button {
+        font-size: 16px;
+        min-height: 32px;
+    }
+}

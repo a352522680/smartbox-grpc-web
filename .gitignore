@@ -1,0 +1,4 @@
+package-lock.json
+.vs
+logs
+node_modules

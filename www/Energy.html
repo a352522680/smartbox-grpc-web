@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>水电气能耗看板</title>
+    <link rel="stylesheet" href="./css/Energy.css">
+</head>
+<body>
+    <div id="TopBox">
+        <div id="TopBox_left">
+            <button class="icon-button" id="menu-button" type="button" aria-label="打开菜单">
+                <img class="icon-image icon-image-menu" src="./img/menu.svg" alt="" />
+            </button>
+            <h1>水电气能耗看板</h1>
+        </div>
+        <div id="TopBox_right">
+            <div class="energy-v5-time-row">
+                <span class="energy-v5-time-label">更新时间</span>
+                <span class="is-live-changing" id="Time"></span>  
+            </div>
+            <div class="energy-v5-time-row">
+                <span class="energy-v5-time-label">数据时间</span>
+                <span class="energy-v5-time-accent">3分钟</span>  
+
+            </div>
+        </div>
+    </div>
+    <div id="main">
+
+        <div class="toolbar-divider"></div>
+        <div id="MiddleBox">
+            <div class="energy-v5-summary-row">
+                <div class="energy-v5-summary-card" style="gap: 0;">
+                    <!-- <span class="energy-v5-summary-label" id="totalWorkDaysOfMonth">本月计划出勤日</span> -->
+                    <input type="text" class="energy-v5-summary-label" id="totalWorkDaysOfMonth" value="本月计划出勤日" >
+                    <!-- <span class="energy-v5-summary-value-warn energy-v5-summary-value" style="padding: 5px;" id="cumulativeWorkDays">16</span> -->
+                    <input type="text" class="energy-v5-summary-value-warn energy-v5-summary-value" style="padding: 5px;" id="cumulativeWorkDays" value="0">
+                    <span class="energy-v5-summary-label">已累计出勤(日)</span>
+                </div>
+                <div class="energy-v5-summary-card">
+                    <span class="energy-v5-summary-label">开始时间</span>
+                    <span class="energy-v5-summary-value " id="firstWorkDayStr"></span>
+                </div>
+                <div class="energy-v5-summary-card">
+                    <span class="energy-v5-summary-label">截止时间</span>
+                    <span class="energy-v5-summary-value " id="lastWorkDayStr"></span>
+                </div>
+                <div class="energy-v5-summary-card">
+                    <span class="energy-v5-summary-label">月稼动日比</span>
+                    <span class="energy-v5-summary-value energy-v5-summary-value-positive" id="Monthrate">%</span>
+                </div>
+                <div class="energy-v5-summary-card">
+                    <span class="energy-v5-summary-label">日稼动时间比</span>
+                    <span class="energy-v5-summary-value energy-v5-summary-value-positive" id="Dayrate">%</span>
+                </div>
+            </div>
+            <div class="energy-v5-columns">
+                <div class="energy-v5-column energy-v5-column-electric">
+                    <div class="energy-v5-column-banner energy-v5-column-banner-electric">
+                        <div class="energy-v5-column-icon energy-v5-column-icon-electric">
+                            <img src="../img/images/icon_energy.png" alt="">
+                        </div>
+                        <strong>节约用电</strong>
+                        <span>部品工场 • 组立工场（电削减）</span>
+                    </div>
+                    <div class="energy-v5-main-table">
+                        <div class="energy-v5-table-head">18年度电量实际（1000kwh）</div>
+                        <div class="energy-v5-table-head" id="LastYearDtext"></div>
+                        <div class="energy-v5-table-head" id="NYD1_1"></div>
+                        <div class="energy-v5-table-head" id="NYD1"></div>
+                        <div class="energy-v5-table-head">全年度达成率<br>（%）</div>
+                        <div class="energy-v5-table-value energy-v5-table-value-blue is-live-changing" id="Y18D"></div>
+                        <div class="energy-v5-table-value is-live-changing" id="LastYearDvalue"></div>
+                        <div class="energy-v5-table-value is-live-changing" id="D_Target"></div>
+                        <div class="energy-v5-table-value is-live-changing" id="JG_S_D_SUM"></div>
+                        <div class="energy-v5-table-value energy-v5-percent energy-v5-percent-electric is-live-changing" id="Dbfb1"></div>
+                    </div>
+                    <div class="energy-v5-subtable-row">
+                        <div class="energy-v5-subtable-label">加工栋</div>
+                        <div class="energy-v5-subtable-grid">
+                            <div class="energy-v5-table-head" id="NYD18_1">18年03月电量实际（1000kw）</div>
+                            <div class="energy-v5-table-head" id="NYD2_1">26年03月电量目标（1000kw）</div>
+                            <div class="energy-v5-table-head" id="NYD2">26年03月电量实际（1000kw）</div>
+                            <div class="energy-v5-table-head">加工栋月度达成率（%）</div>
+                            <div class="energy-v5-table-value energy-v5-table-value-small is-live-changing" id="JGD_D_18"></div>
+                            <div class="energy-v5-table-value energy-v5-table-value-small is-live-changing" id="JGD_D"></div>
+                            <div class="energy-v5-table-value energy-v5-table-value-small is-live-changing" id="JG_S_D1"></div>
+                            <div class="energy-v5-table-value energy-v5-percent energy-v5-percent-electric energy-v5-table-value-small is-live-changing" id="Dbfb2">%</div>
+                        </div>
+                    </div>
+                    <div class="energy-v5-subtable-row">
+                        <div class="energy-v5-subtable-label">组立栋</div>
+                        <div class="energy-v5-subtable-grid">
+                             <div class="energy-v5-table-head" id="NYD18_1">18年03月电量实际（1000kw）</div>
+                            <div class="energy-v5-table-head" id="NYD3_1">26年03月电量目标（1000kw）</div>
+                            <div class="energy-v5-table-head" id="NYD3">26年03月电量实际（1000kw）</div>
+                            <div class="energy-v5-table-head">组立栋月度达成率（%）</div>
+                            <div class="energy-v5-table-value energy-v5-table-value-small is-live-changing" id="DLD_D_18"></div>
+                            <div class="energy-v5-table-value energy-v5-table-value-small is-live-changing" id="DLD_D"></div>
+                            <div class="energy-v5-table-value energy-v5-table-value-small is-live-changing" id="JG_S_D2"></div>
+                            <div class="energy-v5-table-value energy-v5-percent energy-v5-percent-electric energy-v5-table-value-small is-live-changing" id="Dbfb3">%</div>
+                        </div>
+                    </div>
+                    <div class="energy-v5-chart-stack">
+                        <div class="energy-v5-chart-row energy-v5-chart-row-top">
+                            <div class="energy-v5-chart-card" id="electric_chart1">
+                                
+                            </div>
+                            <div class="energy-v5-chart-card" id="electric_chart2">
+                                
+                            </div>
+                        </div>
+                        <div class="energy-v5-chart-card energy-v5-chart-card-wide" id="electric_chart3"></div>
+                    </div>
+                </div>
+                <div class="energy-v5-column energy-v5-column-water">
+                    <div class="energy-v5-column-banner energy-v5-column-banner-water">
+                        <div class="energy-v5-column-icon energy-v5-column-icon-water">
+                            <img src="../img/images/icon_water.png" alt="">
+                        </div>
+                        <strong>节约用水</strong>
+                        <span>部品工场 • 组立工场（水削减）</span>
+                    </div>
+                    <div class="energy-v5-main-table">
+                        <div class="energy-v5-table-head">18年度水量实际<br>（T）</div>
+                        <div class="energy-v5-table-head" id="LastYearStext"><br>（T）</div>
+                        <div class="energy-v5-table-head" id="NYS1_1"><br>（T）</div>
+                        <div class="energy-v5-table-head" id="NYS1"><br>（T）</div>
+                        <div class="energy-v5-table-head">全年度达成率<br>（%）</div>
+                        <div class="energy-v5-table-value energy-v5-table-value-blue is-live-changing" id="Y18S"></div>
+                        <div class="energy-v5-table-value is-live-changing" id="LastYearSvalue"></div>
+                        <div class="energy-v5-table-value is-live-changing" id="S_Target" id="S_Target"></div>
+                        <div class="energy-v5-table-value is-live-changing" id="JG_S_S_SUM"></div>
+                        <div class="energy-v5-table-value energy-v5-percent energy-v5-percent-water is-live-changing" id="Sbfb1">%</div>
+                    </div>
+                    <div class="energy-v5-subtable-row">
+                        <div class="energy-v5-subtable-label">加工栋</div>
+                        <div class="energy-v5-subtable-grid">
+                            <div class="energy-v5-table-head" id="NYS18_1"></div>
+                            <div class="energy-v5-table-head" id="NYS2_1">26年03月水量目标（T）</div>
+                            <div class="energy-v5-table-head" id="NYS2">26年03月水量实际（T）</div>
+                            <div class="energy-v5-table-head">加工栋月度达成率（%）</div>
+                            <div class="energy-v5-table-value energy-v5-table-value-small is-live-changing" id="JGD_S_18"></div>
+                            <div class="energy-v5-table-value energy-v5-table-value-small is-live-changing" id="JGD_S"></div>
+                            <div class="energy-v5-table-value energy-v5-table-value-small is-live-changing" id="JG_S_S1"></div>
+                            <div class="energy-v5-table-value energy-v5-percent energy-v5-percent-water energy-v5-table-value-small is-live-changing" id="Sbfb2">%</div>
+                        </div>
+                    </div>
+                    <div class="energy-v5-subtable-row">
+                        <div class="energy-v5-subtable-label">组立栋</div>
+                        <div class="energy-v5-subtable-grid">
+                            <div class="energy-v5-table-head" id="NYS18_2"></div>
+                            <div class="energy-v5-table-head" id="NYS3_1">26年03月水量目标（T）</div>
+                            <div class="energy-v5-table-head" id="NYS3">26年03月水量实际（T）</div>
+                            <div class="energy-v5-table-head">组立栋月度达成率（%）</div>
+                            <div class="energy-v5-table-value energy-v5-table-value-small is-live-changing" id="DLD_S_18"></div>
+                            <div class="energy-v5-table-value energy-v5-table-value-small is-live-changing" id="DLD_S"></div>
+                            <div class="energy-v5-table-value energy-v5-table-value-small is-live-changing" id="JG_S_S2"></div>
+                            <div class="energy-v5-table-value energy-v5-percent energy-v5-percent-water energy-v5-table-value-small is-live-changing" id="Sbfb3">%</div>
+                        </div>
+                    </div>
+                    <div class="energy-v5-chart-stack">
+                        <div class="energy-v5-chart-row energy-v5-chart-row-top">
+                            <div class="energy-v5-chart-card" id="water_chart1"></div">
+                                
+                            </div>
+                            <div class="energy-v5-chart-card" id="water_chart2">
+                                
+                            </div>
+                        </div>
+                        <div class="energy-v5-chart-card energy-v5-chart-card-wide" id="water_chart3"></div>
+                    </div>
+                </div>
+                <div class="energy-v5-column energy-v5-column-air">
+                    <div class="energy-v5-column-banner energy-v5-column-banner-air">
+                        <div class="energy-v5-column-icon energy-v5-column-icon-air">
+                            <img src="../img/images/icon_airpressure.png" alt="">
+                        </div>
+                        <strong>节约气压</strong>
+                        <span>部品工场 • 组立工场（气压减）</span>
+                    </div>
+                    <div class="energy-v5-main-table">
+                        <div class="energy-v5-table-head">18年度气量实际（Nm³）</div>
+                        <div class="energy-v5-table-head" id="LastYearQtext"></div>
+                        <div class="energy-v5-table-head" id="NYQ1_1">26年03月气量目标（Nm³）</div>
+                        <div class="energy-v5-table-head" id="NYQ1">26年03月气量实际（Nm³）</div>
+                        <div class="energy-v5-table-head">
+                            全年度达成率
+                            <br>
+                            （%）
+                        </div>
+                        <div class="energy-v5-table-value energy-v5-table-value-blue is-live-changing" id="Y18Q"></div>
+                        <div class="energy-v5-table-value is-live-changing" id="LastYearQvalue"></div>
+                        <div class="energy-v5-table-value is-live-changing" id="Q_Target"></div>
+                        <div class="energy-v5-table-value is-live-changing" id="JG_S_Q_SUM"></div>
+                        <div class="energy-v5-table-value energy-v5-percent energy-v5-percent-air is-live-changing" id="Qbfb1">%</div>
+                    </div>
+                    <div class="energy-v5-subtable-row">
+                        <div class="energy-v5-subtable-label">加工栋</div>
+                        <div class="energy-v5-subtable-grid">
+                            <div class="energy-v5-table-head" id="NYQ18_1">18年03月气量实际（Nm³）</div>
+                            <div class="energy-v5-table-head" id="NYQ2_1">26年03月气量目标（Nm³）</div>
+                            <div class="energy-v5-table-head" id="NYQ2">26年03月气量实际（Nm³）</div>
+                            <div class="energy-v5-table-head">加工栋月度达成率（%）</div>
+                            <div class="energy-v5-table-value energy-v5-table-value-small is-live-changing" id="JGD_Q_18"></div>
+                            <div class="energy-v5-table-value energy-v5-table-value-small is-live-changing" id="JGD_Q"></div>
+                            <div class="energy-v5-table-value energy-v5-table-value-small is-live-changing" id="JG_S_Q1"></div>
+                            <div class="energy-v5-table-value energy-v5-percent energy-v5-percent-air energy-v5-table-value-small is-live-changing" id="Qbfb2">%</div>
+                        </div>
+                    </div>
+                    <div class="energy-v5-subtable-row">
+                        <div class="energy-v5-subtable-label">组立栋</div>
+                        <div class="energy-v5-subtable-grid">
+                            <div class="energy-v5-table-head" id="NYQ18_2">18年03月气量实际（Nm³）</div>
+                            <div class="energy-v5-table-head" id="NYQ3_1">26年03月气量目标（Nm³）</div>
+                            <div class="energy-v5-table-head" id="NYQ3">26年03月气量实际（Nm³）</div>
+                            <div class="energy-v5-table-head">组立栋月度达成率（%）</div>
+                            <div class="energy-v5-table-value energy-v5-table-value-small is-live-changing" id="DLD_Q_18"></div>
+                            <div class="energy-v5-table-value energy-v5-table-value-small is-live-changing" id="DLD_Q"></div>
+                            <div class="energy-v5-table-value energy-v5-table-value-small is-live-changing" id="JG_S_Q2"></div>
+                            <div class="energy-v5-table-value energy-v5-percent energy-v5-percent-air energy-v5-table-value-small is-live-changing" id="Qbfb3">%</div>
+                        </div>
+                    </div>
+                    <div class="energy-v5-chart-stack">
+                        <div class="energy-v5-chart-row energy-v5-chart-row-top">
+                            <div class="energy-v5-chart-card" id="air_chart1">
+                                
+                            </div>
+                            <div class="energy-v5-chart-card" id="air_chart2">
+                                
+                            </div>
+                        </div>
+                        <div class="energy-v5-chart-card energy-v5-chart-card-wide" id="air_chart3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="BottomBox">
+
+        </div>
+
+    </div>
+
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/laydate.js"></script>
+    <script src="./js/echarts.min.js"></script>
+    <script src="./js/Energy_parameter.js"></script>
+    <script src="./js/Energy.js"></script> 
+    <script src="./js/Nav.js"></script>
+    <link rel="stylesheet" href="./css/Nav.css">
+</body>
+</html>

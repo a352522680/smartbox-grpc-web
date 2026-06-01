@@ -1,0 +1,14 @@
+// Message(s) for QueryAllCncList
+
+syntax = "proto3";
+
+package smt_iot.v1.aux;
+
+import "ReusableTypes_Common/TIotStatus.proto";
+import "ServiceTypes_AuxSbox/TCncTypes.proto";
+
+message QueryAllCncListResponse
+{
+  iot_common.v1.IotStatus iot_status = 1;
+  repeated CncIdentity cnc_list = 2;
+}

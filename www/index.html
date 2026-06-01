@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    
+   
+    <link rel="stylesheet" href="./css/laydate.css">
+    <link rel="stylesheet" href="./css/index.css">
+
+
+</head>
+<body>
+    <!-- 图片来源https://www.figma.com/community/file/1295214285676321181 -->
+    <div id="box">
+      <div id="header">
+        <div id="TopBox_left">
+            <button class="icon-button" id="menu-button" type="button" aria-label="打开菜单">
+                <img class="icon-image icon-image-menu" src="./img/menu.svg" alt="" />
+            </button>
+        </div>
+        <div id="MachineBox">
+          <img src="./img/cnc_Kern_triton.png" width="48" alt="Source:www.figma.com/community/file/1295214285676321181">
+          <!--
+            <input type="text" id="MachineName">
+            <img src="./img/icon_edit.png" style="cursor: pointer;" onclick="but_Machine()" alt="Source:www.figma.com/community/file/1295214285676321181">
+          -->
+          <!-- 华兴 新加开始 -->
+          <select id="MachineConfigDropdown" onchange="updateSelectedMachineInfo(this.value, this.options[this.selectedIndex].dataset)"></select> <!-- dropdown to select machine -->
+          <!-- 华兴 新加完毕 -->
+        </div>
+
+        <div style="display: flex;
+            position: absolute;
+            right: 50px;">
+
+        
+          <div id="Widgets" onclick="Widget()">
+            
+            <img src="./img/icon_customizer.png" alt="Source:www.figma.com/community/file/1295214285676321181 ">
+            <span>Customize Widgets</span>
+            <div id="WidgetsBox">
+
+            </div>
+          </div>
+          <div id="TimeBox">
+            <div class="tbox"><input type="text" id="Start-YMD"></div>
+            <div style="margin: 10px;">to</div>
+            <div class="tbox"><span id="End-YMD"></span></div>
+            <div style="    display: flex;
+                    color: #edf6ff;
+                    font-size: 12px;
+                    align-items: center;
+                    width: 35px;
+                    height: 35px;
+                    justify-content: space-around;
+                    margin-left: 4%;
+                    background: #fff;
+                    border-radius: 7px;
+                    cursor: pointer;">
+              <img src="./img/icon_refresh.png" alt="Source:www.figma.com/community/file/1295214285676321181" id="Refresh" onclick="Refresh_()">
+
+            </div>
+
+          </div>
+          <div id="Datetime">
+            <div class="tbox"><input type="text" id="Start-HMS"></div>
+            <div style="    display: flex;
+                    color: #edf6ff;
+                    font-size: 12px;
+                    align-items: center;
+                    width: 35px;
+                    height: 35px;
+                    justify-content: space-around;
+                    margin-left: 4%;
+                    background: #fff;
+                    border-radius: 7px;
+                    cursor: pointer;">
+              <img src="./img/icon_customizer.png" alt="Source:www.figma.com/community/file/1295214285676321181" id="EditTime" onclick="EditTime_()">
+
+            </div>
+
+          </div>
+            <div id="History" onclick="ViewHistory()">
+                <span>View History</span>
+
+            </div>
+                <div class="layui-inline" id="HistoryBox">
+                    <div class="layui-input-inline">
+                        <input type="text" autocomplete="off" id="startDate" class="layui-input" placeholder="DateRange">
+
+                    </div>
+                        <div style=" display: flex;
+                                color: #edf6ff;
+                                font-size: 12px;
+                                align-items: center;
+                                width: 26px;
+                                height: 40px;">
+                            <img src="./img/icon_refresh.png" alt="Source:www.figma.com/community/file/1295214285676321181" id="Refresh2" onclick="Refresh_2()">
+                        </div>
+                </div>
+          <div style="display: flex;
+                            color: #edf6ff;
+                            font-size: 12px;
+                            align-items: center;
+                            width: 40px;
+                            justify-content: space-around;
+                            margin-left: 4%;
+                            background: #fff;
+                            border-radius: 7px;
+                            cursor: pointer;" onclick="Download()">
+            <img src="./img/icon_download.png" alt="" style="filter: brightness(0) saturate(100%);">
+          </div>
+        </div>
+
+
+      </div>
+        <div id="main"> 
+            <div id="left">
+                <div id="left_one">
+                    <div id="left_1" class="left_small_box">
+                        <div class="HeadTitle">
+                            <img class="widget-icon-image" src="./img/icon_chart.png" width="16" alt="">
+                            <span id="StatusSummaryText">Status Summary</span>
+                            <div id="left_close_1" class="close" onclick="_Close1(this)">×</div>
+                        </div>
+                        <div id="left_1_main">
+                            <div class="left_1_box">
+                                <img class="widget-icon-image" src="./img/icon_connect.png" alt="Source:www.figma.com/community/file/1295214285676321181 ">
+                                <div class="PercentBar">
+                                    <div id="ConnectText">Connect</div>
+                                    <div class="barColor1">
+                                        <div id="barValue1"></div>
+                                    </div>
+                                </div>
+                                <span id="PercentValue1" class="PercentValue">0%</span>
+                            </div>
+                            <div class="left_1_box">
+                                <img class="widget-icon-image" src="./img/icon_cogs.png" alt="Source:www.figma.com/community/file/1295214285676321181 ">
+                                <div class="PercentBar">
+                                    <div id="RunningTimeText">Running Time</div>
+                                    <div class="barColor2">
+                                        <div id="barValue2"></div>
+                                    </div>
+                                </div>
+                                <span id="PercentValue2" class="PercentValue">0%</span>
+                            </div>
+                            <div class="left_1_box">
+                                <img class="widget-icon-image" src="./img/icon_cutter.png" alt="Source:www.figma.com/community/file/1295214285676321181 ">
+                                <div class="PercentBar">
+                                    <div id="CuttingTimeText">Cutting Time</div>
+                                    <div class="barColor3">
+                                        <div id="barValue3"></div>
+                                    </div>
+                                </div>
+                                <span id="PercentValue3" class="PercentValue">0%</span>
+                            </div>
+                            <div class="left_1_box">
+                                <div>
+                                    <img class="widget-icon-image" src="./img/icon_alarm.png" alt="Source:www.figma.com/community/file/1295214285676321181 ">
+
+                                </div>
+
+                                <div class="PercentBar">
+                                    <div id="AlarmTimeText">Alarm Time</div>
+                                    <div class="barColor4">
+                                        <div id="barValue4"></div>
+                                    </div>
+                                </div>
+                                <span id="PercentValue4" class="PercentValue">0%</span>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div id="left_2" class="left_small_box">                    
+                        <div class="HeadTitle">
+                            <img class="widget-icon-image" src="./img/icon_processor.png" width="16" alt="Source:www.figma.com/community/file/1295214285676321181">
+                            <span id="MachineModeText">Machine Mode</span>
+                            <div id="left_close_2" class="close" onclick="_Close1(this)">×</div>
+                        </div>
+                        <div id="left_2_main">
+
+
+                        </div>
+                    </div>
+                    <div id="left_3" class="left_small_box">
+                        <div class="HeadTitle">
+                            <img class="widget-icon-image" src="./img/icon_tool.png" width="16" alt="Source:www.figma.com/community/file/1295214285676321181">
+                            <span id="ToolUsageText">Tool Usage</span>
+                            <div id="left_close_3" class="close" onclick="_Close1(this)">×</div>
+                        </div>
+                        <div id="left_3_main">
+
+                        </div>
+                    </div>
+                    <div id="left_4" class="left_small_box">
+                        <div class="HeadTitle">
+                            <img class="widget-icon-image" src="./img/icon_chart.png" width="16" alt="Source:www.figma.com/community/file/1295214285676321181">
+                            <span id="ProgramUsageText">Program Usage</span>
+                            <div id="left_close_4" class="close" onclick="_Close1(this)">×</div>
+                        </div>
+                        <div id="left_4_main">
+
+                        </div>
+                    </div>
+                </div>
+                <div id="left_two">
+                    <div id="left_5" class="Lt">
+                        <div class="HeadTitle">
+                            <img class="widget-icon-image" src="./img/icon_loadlist.png" width="16" alt="Source:www.figma.com/community/file/1295214285676321181">
+                            <span id="PeakLoadTimeText">PeakLoad Time</span>
+                            <div id="left_close_5" class="close" onclick="_Close2(this)">×</div>
+                        </div>
+                        <div id="left_5_box">
+                            <table>
+                                <tr clas="left_5_table_th">
+                                    <th>X-Load</th>
+                                    <th>Y-Load</th>
+                                    <th>Z-Load</th>
+                                    <th>A-Load</th>
+                                    <th>S-Load</th>
+                                    <th>Time</th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="left_6" class="Lt">
+                        <div class="HeadTitle">
+                            <img class="widget-icon-image" src="./img/icon_alarm.png" width="16" alt="Source:www.figma.com/community/file/1295214285676321181">
+                            <span id="AlarmsText">Alarms</span>
+                            <span id="AlarmSum"></span>
+                            <div id="left_close_6" class="close" onclick="_Close2(this)">×</div>
+                        </div>
+                        <div id="left_6_main">
+                                
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="right">
+                <div id="right_7">
+                    <div class="HeadTitle2">
+                        <img class="widget-icon-image" src="./img/icon_graph-up.png" width="16" alt="Source:www.figma.com/community/file/1295214285676321181">
+                        <span id="GraphText">Graph</span>
+                        <!-- <div id="right_close_7" class="close" onclick="_Close3(this)">×</div> -->
+                    </div>
+                    <div id="ChartSign">
+                        <!-- <div>Program</div>
+                        <div>Tools</div>
+                        <div><span>Running</span><span>Alarm</span></div>
+                        <div>Feedrate</div>
+                        <div>Spindle RPM</div>
+                        <div>Feed Override</div> -->
+                        <div>程序</div>
+                        <div>刀具</div>
+                        <div><span>运行中</span><span>报警</span></div>
+                        <div>进给速度</div>
+                        <div>主轴转速</div>
+                        <div>进给倍率</div>
+                    </div>
+                    <div id="mainChart">
+
+                    </div>
+                </div>
+                <div id="right_8" class="Rt">
+                    <div class="HeadTitle2">
+                        <img class="widget-icon-image" src="./img/icon_coordinate-system.png" width="16" alt="Source:www.figma.com/community/file/1295214285676321181">
+                        <span id="CoordinateChangeText">Coordinate Change</span>
+                        <div id="right_close_8" class="close" onclick="_Close3(this)">×</div>
+                    </div>
+                    <div id="right_8_box">
+                        <table>
+                            <tr>
+                                <th>Name</th>
+                                <th>LGX</th>
+                                <th>LGY</th>      
+                                <th>LGZ</th>
+                                <th>LGA</th>
+                                <th>GX</th>
+                                <th>GY</th>
+                                <th>GZ</th>
+                                <th>GA</th>
+                                <th>Time</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div id="right_9" class="Rt">
+                    <div class="HeadTitle2">
+                        <img class="widget-icon-image" src="./img/icon_tools.png" width="16" alt="Source:www.figma.com/community/file/1295214285676321181">
+                        <span id="ToolChangeText">Tool Change</span>
+                        <div id="right_close_9" class="close" onclick="_Close3(this)">×</div>
+                    </div>
+                    <div id="right_9_box">
+                        <table>
+                            <tr>
+                                <th>Tool</th>
+                                <th>LtcD</th>
+                                <th>LtwD</th>      
+                                <th>LtcH</th>
+                                <th>LtwH</th>
+                                <th>tcD</th>
+                                <th>twD</th>
+                                <th>tcH</th>
+                                <th>twH</th>
+                                <th>Time</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="popup">
+        <div id="popup_box">
+            <div id="popup_load">
+                <div id="popupStatus">Loading...</div>
+                <div><img src="img/loadingGIF.gif" alt="loading"></div>
+            </div>
+            <div id="popup_header">
+                <div id="popup_close" onclick="Popupclose()" class="close">×</div>
+            </div>
+            <div id="popup_box_Sum">
+                <div id="popup_1"></div>
+                <div id="popup_2"></div>
+                <div id="popup_3"></div>
+                <div id="popup_4"></div>
+            </div>
+            <div id="popup_box_NC">
+                <div class="HeadTitle">
+                    <img src="./img/icon_chart.png" width="16" alt="Source:www.figma.com/community/file/1295214285676321181">
+                    <span>Program Usage</span>
+                </div>
+                <div id="popup_box_NC_main">
+                    <div>
+                        <span>NC</span>
+                        <span>Processing duration</span>
+                        <span>Number of uses</span>
+                    </div>
+                    <div id="popup_box_NC_data">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/laydate.js"></script>
+    <script src="./js/echarts.min.js"></script>
+    <script src="./js/Render.js"></script>
+    <script src="Language/Language.js"></script>
+    <script src="./js/Nav.js"></script>
+    <link rel="stylesheet" href="./css/Nav.css">
+</body>
+</html>

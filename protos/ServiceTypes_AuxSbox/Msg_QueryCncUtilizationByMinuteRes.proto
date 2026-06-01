@@ -1,0 +1,35 @@
+// Message(s) for QueryCncUtilizationByMinuteRes
+
+syntax = "proto3";
+
+package smt_iot.v1.aux;
+
+import "google/protobuf/timestamp.proto";
+
+import "ReusableTypes_Common/TIotStatus.proto";
+import "ServiceTypes_AuxSbox/TCncTypes.proto";
+
+message QueryCncUtilizationByMinuteResRequest
+{
+  // If cnc_uids is empty, the service should return utilization for all CNCs.
+  repeated string cnc_uids = 1;
+  CncUtilizationTypeRequest utilization_type_request = 2;
+
+  // start_datetime must be aligned to minute precision and must not be earlier
+  // than the supported 6-month historical boundary from the current month.
+  google.protobuf.Timestamp start_datetime = 3;
+
+  // Supported values are MINUTE and HOUR only.
+  // TIMEBIN_UNSPECIFIED defaults to MINUTE.
+  TimeBin time_bin = 4;
+
+  // Total number of bins from start_datetime inclusive.
+  // Max 48 when time_bin == HOUR, max 1000 when time_bin == MINUTE.
+  int32 total_bins = 5;
+}
+
+message QueryCncUtilizationByMinuteResResponse
+{
+  iot_common.v1.IotStatus iot_status = 1;
+  repeated CncUtilization cnc_utilization_list = 2;
+}

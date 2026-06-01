@@ -1,0 +1,29 @@
+// Message(s) for QueryFacilityDailyUtilityUsage
+
+syntax = "proto3";
+
+package smt_iot.v1.aux;
+
+import "google/protobuf/timestamp.proto";
+
+import "ReusableTypes_Common/TIotStatus.proto";
+import "ServiceTypes_AuxSbox/TUtilityTypes.proto";
+
+message QueryFacilityDailyUtilityUsageRequest
+{
+  // If facility_uids is empty, the service should return data for all facilities.
+  repeated string facility_uids = 1;
+  UtilityTypeRequest utility_type_request = 2;
+
+  // start_day must be aligned to day precision.
+  google.protobuf.Timestamp start_day = 3;
+
+  // Invalid when negative. Max 100 days inclusive of start_day.
+  int32 total_days = 4;
+}
+
+message QueryFacilityDailyUtilityUsageResponse
+{
+  iot_common.v1.IotStatus iot_status = 1;
+  repeated FacilityUtilityUsage facility_utility_usage_list = 2;
+}

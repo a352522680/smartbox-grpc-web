@@ -1,0 +1,69 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smartbox Login</title>
+  <link rel="stylesheet" href="./css/login.css" />
+</head>
+<body>
+  <main class="login-page">
+    <section class="login-brand-panel">
+      <div class="brand-glow brand-glow-top"></div>
+      <div class="brand-glow brand-glow-bottom"></div>
+
+      <div class="brand-content">
+        <p class="brand-kicker">WELCOME TO</p>
+        <h1>SMT</h1>
+        <h2>管理看板</h2>
+        <p class="brand-copy">
+          [SAMPLE DESC] Monitor machine performance, review alarms, and access the Smartbox dashboard from one secure workspace.
+        </p>
+      </div>
+
+      <p class="brand-footer">&copy; 2026 SMT Dashboard. All rights reserved.</p>
+    </section>
+
+    <section class="login-form-panel">
+      <div class="login-card">
+        <p class="login-logo">SMT</p>
+        <h3>WELCOME</h3>
+
+        <form class="login-form" id="login-form">
+          <label class="input-group">
+            <span class="input-icon" aria-hidden="true">U</span>
+            <input type="text" placeholder="Username"  id="Username"/>
+          </label>
+
+          <label class="input-group">
+            <span class="input-icon" aria-hidden="true">P</span>
+            <input id="password-input" type="password" placeholder="Password" />
+            <button class="ghost-icon" id="password-toggle" type="button" aria-label="Show password" aria-pressed="false">
+              <span class="password-icon password-icon-show" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M2 12s3.8-6 10-6 10 6 10 6-3.8 6-10 6S2 12 2 12Z"></path>
+                  <circle cx="12" cy="12" r="3.2"></circle>
+                </svg>
+              </span>
+              <span class="password-icon password-icon-hide hidden" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M3 4.5 20 19.5"></path>
+                  <path d="M10.6 6.2A11.7 11.7 0 0 1 12 6c6.2 0 10 6 10 6a17.4 17.4 0 0 1-4 4.3"></path>
+                  <path d="M6.6 8.1C3.9 10 2 12 2 12s3.8 6 10 6c1.7 0 3.2-.3 4.6-.9"></path>
+                  <path d="M9.9 9.9A3 3 0 0 0 9 12a3 3 0 0 0 4.8 2.4"></path>
+                </svg>
+              </span>
+            </button>
+          </label>
+
+          <button class="login-button" type="submit">Login</button>
+        </form>
+      </div>
+    </section>
+  </main>
+  <script src="./js/jquery.min.js"></script>
+   <script src="./js/login.js"></script>
+</body>
+</html>
+

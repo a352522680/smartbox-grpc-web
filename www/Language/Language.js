@@ -1,0 +1,14 @@
+var Graph_L=["Graph","图形"];
+var MachineMode_L=["Machine Mode","机床模式"]
+var ToolUsage_L=["Tool Usage","刀具使用"];
+var ProgramUsage_L=["Program Usage","程序使用"];
+var StatusSummary_L=["Status Summary","状态汇总"];
+var Connect_L=["Connect","连接率"];
+var RunningTime_L=["Running Time","运行率"];
+var AlarmTime_L=["Alarm Time","报警率"];
+var CuttingTime_L=["Cutting Time","切削率"];
+var Running_L=["Running","运行"];
+var Alarm_L=["Alarm","报警"];
+var PeakLoadTimeText=["PeakLoad Time","峰值负载"]
+var CoordinateChangeText=["Coordinate Change","坐标变换"]
+var ToolChangeText=["Tool Change","换刀"]

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>年度KPI设置</title>
+  <link rel="stylesheet" href="./css/Nav.css">
+  <link rel="stylesheet" href="./css/header.css">
+  <link rel="stylesheet" href="./css/KPI.css">
+  <script src="./js/jquery.min.js"></script>
+  <script src="./js/KPI.js"></script>
+  <script src="./js/Nav.js"></script>
+
+</head>
+<body>
+  <div id="header">
+    <div id="TopBox_left">
+        <button class="icon-button" id="menu-button" type="button" aria-label="打开菜单">
+            <img class="icon-image icon-image-menu" src="./img/menu.svg" alt="" />
+        </button>
+    </div>
+    <div id="Header">
+      <h1 id="HeaderTitle">KPI年度设置</h1>
+    </div>
+  </div>
+  <main class="dashboard-shell kpi-settings-shell">
+    <section class="kpi-settings-board" aria-label="KPI annual settings content">
+      <section class="kpi-settings-filter-row" aria-label="Filter controls">
+        <div class="kpi-settings-filter-group">
+          <label class="kpi-settings-filter-label" for="kpi-start-year">KPI年</label>
+          <div class="kpi-settings-year-range">
+            <input id="kpi-start-year" class="kpi-settings-input kpi-settings-input-year" type="number" min="2020" max="2040" value="2024">
+          </div>
+        </div>
+
+        <div class="kpi-settings-filter-actions">
+          <button class="toolbar-button kpi-settings-search-button" type="button">搜索</button>
+        </div>
+      </section>
+
+      <section class="kpi-settings-action-row" aria-label="Table actions">
+        <button class="kpi-settings-action-button is-add" type="button">+ 新增</button>
+        <button class="kpi-settings-action-button is-edit" type="button">修改</button>
+        <button class="kpi-settings-action-button is-delete" type="button">删除</button>
+      </section>
+
+      <section class="kpi-settings-table-shell" aria-label="KPI annual target table">
+        <div class="kpi-settings-table-wrap">
+          <table class="kpi-settings-table">
+            <thead>
+              <tr>
+                <th>年度</th>
+                <th>月份</th>
+                <th>加工栋-用电(1000KW)</th>
+                <th>组立栋-用电(1000KW)</th>
+                <th>加工栋-用水(T)</th>
+                <th>组立栋-用水(T)</th>
+                <th>加工栋-用气(m³)</th>
+                <th>组立栋-用气(m³)</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr><td>2026</td><td>01</td><td>85</td><td>12</td><td>65</td><td>20</td><td>500</td><td>150</td></tr>
+                <tr><td>2026</td><td>02</td><td>82</td><td>11</td><td>60</td><td>19</td><td>480</td><td>140</td></tr>
+                <tr><td>2026</td><td>03</td><td>90</td><td>13</td><td>70</td><td>21</td><td>520</td><td>160</td></tr>
+                <tr><td>2026</td><td>04</td><td>88</td><td>12</td><td>68</td><td>22</td><td>510</td><td>155</td></tr>
+                <tr><td>2026</td><td>05</td><td>92</td><td>14</td><td>72</td><td>23</td><td>530</td><td>165</td></tr>
+                <tr><td>2026</td><td>06</td><td>95</td><td>15</td><td>75</td><td>25</td><td>550</td><td>170</td></tr>
+                <tr><td>2026</td><td>07</td><td>98</td><td>16</td><td>80</td><td>26</td><td>560</td><td>180</td></tr>
+                <tr><td>2026</td><td>08</td><td>100</td><td>16</td><td>82</td><td>28</td><td>580</td><td>190</td></tr>
+                <tr><td>2026</td><td>09</td><td>96</td><td>15</td><td>78</td><td>24</td><td>555</td><td>175</td></tr>
+                <tr><td>2026</td><td>10</td><td>93</td><td>14</td><td>74</td><td>22</td><td>540</td><td>168</td></tr>
+                <tr><td>2026</td><td>11</td><td>89</td><td>13</td><td>70</td><td>21</td><td>525</td><td>160</td></tr>
+                <tr><td>2026</td><td>12</td><td>86</td><td>12</td><td>66</td><td>20</td><td>505</td><td>152</td></tr>
+                <tr class="total-row"><td></td><td class="total-label">合计</td><td>1094</td><td>163</td><td>860</td><td>271</td><td>6355</td><td>1965</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+  </main>
+    
+</body>
+</html>

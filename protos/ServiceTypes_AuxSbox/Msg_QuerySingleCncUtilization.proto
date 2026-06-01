@@ -1,0 +1,28 @@
+// Message(s) for QuerySingleCncUtilization
+
+syntax = "proto3";
+
+package smt_iot.v1.aux;
+
+import "google/protobuf/timestamp.proto";
+
+import "ReusableTypes_Common/TIotStatus.proto";
+import "ServiceTypes_AuxSbox/TCncTypes.proto";
+
+message QuerySingleCncUtilizationRequest
+{
+  // Invalid when cnc_uid does not exist.
+  string cnc_uid = 1;
+
+  // Non-minute-aligned timestamps are rounded to the nearest minute.
+  // Older timestamps outside the minute-resolution retention window are
+  // rounded to the nearest hour when they are not hour-aligned.
+  google.protobuf.Timestamp start_time = 2;
+  google.protobuf.Timestamp end_time = 3;
+}
+
+message QuerySingleCncUtilizationResponse
+{
+  iot_common.v1.IotStatus iot_status = 1;
+  CncUtilization cnc_utilization = 2;
+}

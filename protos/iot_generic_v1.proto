@@ -1,0 +1,210 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+// generic IoT protocol
+package iot_generic.grpc.v1;
+
+// IoTProducerSvc refers to service hosted by an entity that produces IoT data
+service IoTProducerSvc
+{
+  // IoTConsumerSvc client provides its ip/port details and requests IoTProducerSvc server to connect to its service
+  rpc RequestPushSession(RequestSessionParams) returns (RequestReplyStatus);
+
+  // opposite of RequestPushSession for symmetry reasons; allows IoTProducerSvc server the chance to handle any release of resources or change its internal state if needed
+  rpc ClosePushSession(RequestParams) returns (ReplyStatus);
+
+  // if IoTConsumerSvc server has not heard from IoTProducerSvc client after certain time elapsed, IoTConsumerSvc client attempts to ping it to check its 'aliveness'
+  rpc Ping(RequestParams) returns (PingReply);
+
+  // IoTConsumerSvc client indicates that it's now ready to receive data and requests the IoTProducerSvc server to start pushing (if available)
+  rpc StartPushing(RequestParams) returns (ReplyStatus);
+
+  // IoTConsumerSvc client indicates that it's not ready to receive data and requests the IoTProducerSvc server to stop pushing
+  rpc StopPushing(RequestParams) returns (ReplyStatus);
+
+  rpc QueryEfficiency(QueryEfficiencyRequest) returns (GenericQueryReply);
+
+  rpc QueryHistoricalEvent(GenericQueryRequest) returns (GenericQueryReply);
+  
+  rpc QueryHistoricalBar(GenericQueryRequest) returns (GenericQueryReply);
+  
+  rpc QueryHistoricalGraph(GenericQueryRequest) returns (GenericQueryReply);
+
+  rpc QueryChangeRecord(GenericQueryRequest) returns (GenericQueryReply);
+
+  rpc QueryUsagePeriod(GenericQueryRequest) returns (GenericQueryReply);
+}
+
+// IoTConsumerSvc refers to the service hosted by entity that consumes IoT data
+service IoTConsumerSvc
+{
+  // provides a way for IoTProducerSvc client to send data to IoTConsumerSvc server
+  // the data is expected to small, periodic and non-continuous --> to consider bi-directional streams in future
+  rpc PushDeviceData(DeviceData) returns (google.protobuf.Empty);
+
+  // provides a way for IoTProducerSvc client to proactively report any possible errors occurring from its side
+  rpc NotifyErrors(ProducerErrorParam) returns (google.protobuf.Empty);
+}
+
+// generic reply code from Producer
+enum ProducerStatus
+{
+  OK = 0;
+  
+  //////////////////
+  // generic
+  //////////////////
+  NOK_INVALID_OPERATION = 10;
+  NOK_INVALID_STATE = 11;
+  NOK_INVALID_PARAMS = 12;
+  NOK_OPERATION_ABORTED = 13;
+  NOK_OPERATION_TIMEOUT = 14;
+  NOK_NOT_FOUND = 15;
+  NOK_ALREADY_EXISTS =16;
+  NOK_PERMISSION_ERROR = 17;
+  NOK_AUTHENTICATION_FAILED = 18;
+  NOK_OUT_OF_RESOURCES = 19;
+  NOK_OUT_OF_RANGE = 20;
+  NOK_DATA_INTEGRITY_ERROR = 21;
+
+  //////////////////
+  // network-related
+  //////////////////
+  // if producer already connected to current consumer on same port
+  NOK_ALREADY_CONNECTED = 1001;
+  // if IP sent by consumer is not valid
+  NOK_INVALID_USER_IP = 1002;
+  // if port sent by consumer is not valid
+  NOK_INVALID_USER_PORT = 1003;
+  // unable to connect to consumer IP
+  NOK_UNABLE_TO_CONNECT_TO_USER_IP = 1004;
+  // credentials
+  NOK_INVALID_CREDENTIALS = 1005;
+  // generic network issues
+  NOK_NETWORK_LAYER_ERRORS = 1006;
+
+  /////////////////
+  // device-related
+  /////////////////
+  // unknown device id
+  NOK_DEVICE_UNKNOWN_ID = 2001;
+  // producer has no connection/communication to the device
+  NOK_DEVICE_NOT_AVAILABLE = 2002;
+  // producer received/detected an error on the device
+  NOK_DEVICE_HW_ERROR = 2003;
+  // producer is not ready to perform the operation requested by consumer
+  NOK_DEVICE_NOT_READY = 2004;
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // application-level IDL, contracts and other interactions related
+  ////////////////////////////////////////////////////////////////////////////////
+  // Incompatibility with respect to Object JSON data version (this refers to object JSON-format compatibility with those used by application)
+  NOK_OBJ_JSON_DATA_VERSION = 3001;
+
+  // max positive value for 32-bit integer (https://developers.google.com/protocol-buffers/docs/proto3#enum)
+  NOK_UNEXPECTED_ERROR = 0x7FFFFFFF;
+}
+
+// the initialize request (for RequestPushSession) encapsulates the consumer details, for producer to connect to
+message RequestSessionParams
+{
+  // consumer IPv4 address
+  string consumerIpV4 = 1;
+
+  // consumer IPv6 address (optional) -> unused right now, but to accomodate possible future use
+  optional string consumerIpV6 = 2;
+
+  // consumer port number
+  uint32 port = 3;
+
+  // Object JSON data version (this refers to object JSON-format compatibility with those used by application)
+  uint32 objJsonDataVersion = 4;
+
+  // producer device id is for validation (TBC)
+  string targetDeviceId = 5;
+}
+
+message RequestParams
+{
+  // consumer IPv4 address
+  string consumerIpV4 = 1;
+
+  // consumer IPv6 address (optional) -> unused right now, but to accomodate possible future use
+  optional string consumerIpV6 = 2;
+
+  // consumer port number
+  uint32 port = 3;
+}
+
+// reply message to the push session request
+message RequestReplyStatus
+{
+  // return Ok or first error encountered (common convention to avoid unnecessary processing)
+  ProducerStatus status = 1;
+
+  // this version will be meaningful if reply code contains NOK_OBJ_JSON_DATA_VERSION
+  uint32 objJsonDataVersion = 2;
+
+  // Report other messages if applicable; note that 'repeated' fields are optional, thus this field is also optional
+  optional string feedbackMessage = 3;
+}
+
+// general reply code for Backend service
+message ReplyStatus
+{
+  // return Ok or first error encountered (common convention to avoid unnecessary processing)
+  ProducerStatus status = 1;
+
+  optional string feedbackMessage = 2;
+}
+
+// ping reply message
+message PingReply
+{
+  // replies with current time at producer (can be used to check latency if time is synchronized)
+  google.protobuf.Timestamp timestamp = 1;
+}
+
+// device data pushed by producer
+message DeviceData
+{
+  // current timestamp of backend adapter
+  google.protobuf.Timestamp timestamp = 1;
+
+  // serialzied JSON string of object definitions that will be consumed by application
+  // these definitions are decoupled from GRPC
+  string jsonData = 2;
+}
+
+// ==> The following can be refined if we know what possible producer errors could be encountered
+// generic producer error proactively sent by the producer service
+message ProducerErrorParam
+{
+  // current timestamp of backend adapter
+  google.protobuf.Timestamp timestamp = 1;
+   
+  // could be refined and improved in future
+  repeated string errorMessages = 2; 
+}
+
+message QueryEfficiencyRequest
+{
+  uint32 mask = 1;
+  google.protobuf.Timestamp start = 2;
+  google.protobuf.Timestamp end = 3;
+  int32 segments = 4;
+}
+
+message GenericQueryRequest
+{
+  uint32 mask = 1;
+  google.protobuf.Timestamp start = 2;
+  google.protobuf.Timestamp end = 3;
+}
+
+message GenericQueryReply
+{
+  string jsonData = 1;
+}

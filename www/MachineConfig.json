@@ -1,0 +1,6 @@
+{
+  "options": [
+      { "label": "Triton-1",     "ip": "10.220.86.9",  "port": 50151, "type": "FANUC" ,"ShowType":"0","Mid":"1" }
+
+  ]
+}

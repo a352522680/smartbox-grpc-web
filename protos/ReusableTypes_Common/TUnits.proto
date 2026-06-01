@@ -1,0 +1,111 @@
+syntax = "proto3";
+
+package iot_common.v1;
+
+enum EnergyConsumptionUnit
+{
+  ENERGY_CONSUMPTION_UNIT_UNSPECIFIED = 0;
+
+  // SI energy
+  J   = 1;  // joule
+  KJ  = 2;  // kilojoule
+  MJ  = 3;  // megajoule
+  GJ  = 4;  // gigajoule
+
+  // Electrical energy (most common for consumption)
+  WH   = 10; // watt-hour
+  KWH  = 11; // kilowatt-hour
+  MWH  = 12; // megawatt-hour
+  GWH  = 13; // gigawatt-hour
+
+  // Thermal / industrial
+  CAL   = 20; // calorie (small cal)
+  KCAL  = 21; // kilocalorie (food Calorie)
+  BTU   = 22; // British thermal unit
+  THERM = 23; // therm
+
+  // Oil & gas / large-scale (optional but common in some sectors)
+  TOE = 30; // tonne of oil equivalent
+}
+
+enum AirFlowUnit
+{
+  AIR_FLOW_UNIT_UNSPECIFIED = 0;
+
+  // Volumetric flow at stated "normal/standard" reference conditions
+  NL_PER_MIN   = 1; // Nl/min  (normal liter per minute)
+  SL_PER_MIN   = 2; // Sl/min  (standard liter per minute)
+  NM3_PER_HR   = 3; // Nm³/h  (normal cubic meter per hour)
+  SM3_PER_HR   = 4; // Sm³/h  (standard cubic meter per hour)
+  SCFM         = 5; // scfm    (standard cubic feet per minute)
+  NCFM         = 6; // ncfm    (normal cubic feet per minute; less common)
+
+  // Actual volumetric flow (at actual line conditions)
+  L_PER_MIN    = 10; // L/min
+  M3_PER_HR    = 11; // m³/h
+  CFM          = 12; // cfm
+
+  // Mass flow (some meters output this directly)
+  G_PER_MIN    = 20; // g/min
+  KG_PER_HR    = 21; // kg/h
+}
+
+enum AirConsumptionUnit
+{
+  AIR_CONSUMPTION_UNIT_UNSPECIFIED = 0;
+
+  // Totalized volumetric amount at stated "normal/standard" reference conditions
+  NL   = 1; // Nl   (normal liter)
+  SL   = 2; // Sl   (standard liter)
+  NM3  = 3; // Nm³ (normal cubic meter)
+  SM3  = 4; // Sm³ (standard cubic meter)
+  SCF  = 5; // scf  (standard cubic foot)
+  NCF  = 6; // ncf  (normal cubic foot; less common)
+
+  // Totalized actual volumetric amount (at actual line conditions)
+  L    = 10; // L    (liter)
+  M3   = 11; // m³  (cubic meter)
+  FT3  = 12; // ft³ (cubic foot)
+
+  // Totalized mass
+  G    = 20; // g    (gram)
+  KG   = 21; // kg   (kilogram)
+}
+
+enum PressureUnit
+{
+  PRESSURE_UNIT_UNSPECIFIED = 0;
+
+  // SI
+  PA   = 1;  // Pa
+  HPA  = 2;  // hPa  (same magnitude as mbar)
+  KPA  = 3;  // kPa
+  MPA  = 4;  // MPa
+  GPA  = 5;  // GPa
+
+  // Bar family (industrial)
+  BAR  = 6;  // bar
+  MBAR = 7;  // mbar
+
+  // Atmosphere-based
+  ATM  = 8;  // atm (standard atmosphere)
+
+  // Force-per-area legacy engineering units
+  KGF_PER_CM2 = 9;  // kgf/cm^2 (often written kg/cm2)
+
+  // Imperial / US customary
+  PSI  = 10; // psi
+  KSI  = 11; // ksi
+  PSF  = 12; // psf (lbf/ft^2)
+
+  // Head of fluid (column height)
+  MMH2O = 13; // mmH2O
+  CMH2O = 14; // cmH2O
+  MH2O  = 15; // mH2O
+  INH2O = 16; // inH2O
+
+  // Mercury column (vacuum / legacy)
+  MMHG = 17; // mmHg
+  INHG = 18; // inHg
+  TORR = 19; // torr
+}

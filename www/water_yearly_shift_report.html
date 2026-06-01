@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>水能源年度推移报表</title>
+  <link rel="stylesheet" href="./css/Nav.css">
+  <link rel="stylesheet" href="./css/header.css">
+  <link rel="stylesheet" href="./css/water_yearly_shift_report.css">
+  <script src="./js/jquery.min.js"></script>
+  <script src="./js/water_yearly_shift_report.js"></script>
+  <script src="./js/Nav.js"></script>
+  <script src="./js/echarts.min.js"></script>
+</head>
+<body>
+  <div id="header">
+    <div id="TopBox_left">
+        <button class="icon-button" id="menu-button" type="button" aria-label="打开菜单">
+            <img class="icon-image icon-image-menu" src="./img/menu.svg" alt="" />
+        </button>
+    </div>
+    <div id="Header">
+      <h1 id="HeaderTitle">水能源年度推移报表</h1>
+    </div>
+  </div>
+  <div class="dashboard-shell water-yearly-shell">
+    <div class="water-yearly-board">
+      <section class="water-yearly-filter-row" aria-label="Filter controls">
+        <div class="water-yearly-filter-group">
+          <label class="water-yearly-filter-label" for="water-yearly-start-year">年</label>
+          <div class="water-yearly-inline-range">
+            <input id="water-yearly-start-year" class="water-yearly-input water-yearly-input-year" type="number" min="2018" value="2018">
+            <span class="water-yearly-range-separator">-</span>
+            <input id="water-yearly-end-year" class="water-yearly-input water-yearly-input-year" type="number" min="2018">
+          </div>
+        </div>
+
+        <div class="water-yearly-filter-actions">
+          <button class="toolbar-button water-yearly-search-button" type="button">搜索</button>
+          <button class="toolbar-button water-yearly-reset-button" type="button">重置</button>
+        </div>
+      </section>
+      <div class="water-yearly-chart-card">
+        <div id="water-yearly-chart"></div>
+      </div>
+      <section class="water-yearly-table-shell">
+        <div class="water-yearly-table-wrap">
+          <table class="water-yearly-table">
+            <thead id="water-yearly-table-head">
+              <tr>
+                <th>水</th>
+                <th>2018</th><th>2019</th><th>2020</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th>
+              </tr>
+            </thead>
+            <tbody id="water-yearly-table-body">
+              <tr>
+                <td>水实际</td>
+                <td>3702.00</td><td>5331.00</td><td>7511.00</td><td>3715.00</td><td>3025.82</td><td>1851.15</td><td>2504.03</td><td>2620.40</td>
+              </tr>
+              <tr>
+                <td>水目标</td>
+                <td>3760.00</td><td>3628.00</td><td>3497.00</td><td>3366.00</td><td>3234.00</td><td>2977.00</td><td>2008.00</td><td>2508.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </div>
+
+</body>
+</html>

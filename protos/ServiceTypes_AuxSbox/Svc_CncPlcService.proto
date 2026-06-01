@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package smt_iot.v1.aux;
+
+import "google/protobuf/empty.proto";
+
+import "ServiceTypes_AuxSbox/Msg_QueryAllCncList.proto";
+import "ServiceTypes_AuxSbox/Msg_QueryCncCurrentStatus.proto";
+import "ServiceTypes_AuxSbox/Msg_QueryCncUtilizationByMinuteRes.proto";
+import "ServiceTypes_AuxSbox/Msg_QueryCncUtilizationByHourRes.proto";
+import "ServiceTypes_AuxSbox/Msg_QuerySingleCncUtilization.proto";
+import "ServiceTypes_AuxSbox/Msg_QuerySingleCncStatusHistory.proto";
+
+service CncPlcService
+{
+  rpc QueryAllCncList(google.protobuf.Empty) returns (QueryAllCncListResponse) {}
+  rpc QueryCncCurrentStatus(QueryCncCurrentStatusRequest) returns (QueryCncCurrentStatusResponse) {}
+  rpc QueryCncUtilizationByMinuteRes(QueryCncUtilizationByMinuteResRequest) returns (QueryCncUtilizationByMinuteResResponse) {}
+  rpc QueryCncUtilizationByHourRes(QueryCncUtilizationByHourResRequest) returns (QueryCncUtilizationByHourResResponse) {}
+  rpc QuerySingleCncUtilization(QuerySingleCncUtilizationRequest) returns (QuerySingleCncUtilizationResponse) {}
+  rpc QuerySingleCncStatusHistory(QuerySingleCncStatusHistoryRequest) returns (QuerySingleCncStatusHistoryResponse) {}
+}

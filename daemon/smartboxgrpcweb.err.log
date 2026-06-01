@@ -1,0 +1,31 @@
+[PM2][Initialization] Environment variable HOME (Linux) or HOMEPATH (Windows) are not set!
+[PM2][Initialization] Defaulting to /etc/.pm2
+gRPC error:
+Error: 14 UNAVAILABLE: No connection established. Last error: Error: connect ECONNREFUSED 127.0.0.1:40048
+    at callErrorFromStatus (D:\NewWork\GRPC页面\GRPC-WEB (吉田) 2.1期\smartbox-grpc-web-master@1ae4c16297f\node_modules\@grpc\grpc-js\build\src\call.js:32:19)
+    at Object.onReceiveStatus (D:\NewWork\GRPC页面\GRPC-WEB (吉田) 2.1期\smartbox-grpc-web-master@1ae4c16297f\node_modules\@grpc\grpc-js\build\src\client.js:193:76)
+    at Object.onReceiveStatus (D:\NewWork\GRPC页面\GRPC-WEB (吉田) 2.1期\smartbox-grpc-web-master@1ae4c16297f\node_modules\@grpc\grpc-js\build\src\client-interceptors.js:361:141)
+    at Object.onReceiveStatus (D:\NewWork\GRPC页面\GRPC-WEB (吉田) 2.1期\smartbox-grpc-web-master@1ae4c16297f\node_modules\@grpc\grpc-js\build\src\client-interceptors.js:324:181)
+    at D:\NewWork\GRPC页面\GRPC-WEB (吉田) 2.1期\smartbox-grpc-web-master@1ae4c16297f\node_modules\@grpc\grpc-js\build\src\resolving-call.js:135:78
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+for call at
+    at ServiceClientImpl.makeUnaryRequest (D:\NewWork\GRPC页面\GRPC-WEB (吉田) 2.1期\smartbox-grpc-web-master@1ae4c16297f\node_modules\@grpc\grpc-js\build\src\client.js:161:32)
+    at ServiceClientImpl.<anonymous> (D:\NewWork\GRPC页面\GRPC-WEB (吉田) 2.1期\smartbox-grpc-web-master@1ae4c16297f\node_modules\@grpc\grpc-js\build\src\make-client.js:105:19)
+    at D:\NewWork\GRPC页面\GRPC-WEB (吉田) 2.1期\smartbox-grpc-web-master@1ae4c16297f\router\Energy.js:25:20
+    at new Promise (<anonymous>)
+    at queryUtilityMonitoringDashboard (D:\NewWork\GRPC页面\GRPC-WEB (吉田) 2.1期\smartbox-grpc-web-master@1ae4c16297f\router\Energy.js:9:12)
+    at D:\NewWork\GRPC页面\GRPC-WEB (吉田) 2.1期\smartbox-grpc-web-master@1ae4c16297f\router\Energy.js:107:9
+    at Layer.handle [as handle_request] (D:\NewWork\GRPC页面\GRPC-WEB (吉田) 2.1期\smartbox-grpc-web-master@1ae4c16297f\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\NewWork\GRPC页面\GRPC-WEB (吉田) 2.1期\smartbox-grpc-web-master@1ae4c16297f\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\NewWork\GRPC页面\GRPC-WEB (吉田) 2.1期\smartbox-grpc-web-master@1ae4c16297f\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\NewWork\GRPC页面\GRPC-WEB (吉田) 2.1期\smartbox-grpc-web-master@1ae4c16297f\node_modules\express\lib\router\layer.js:95:5) {
+  code: 14,
+  details: 'No connection established. Last error: Error: connect ECONNREFUSED 127.0.0.1:40048',
+  metadata: Metadata { internalRepr: Map(0) {}, options: {} }
+}
+❌ Utility Monitoring Dashboard 查询失败: {
+  success: false,
+  message: 'gRPC error',
+  error: '14 UNAVAILABLE: No connection established. Last error: Error: connect ECONNREFUSED 127.0.0.1:40048',
+  code: 14
+}

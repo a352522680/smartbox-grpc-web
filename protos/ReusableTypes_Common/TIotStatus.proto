@@ -1,0 +1,109 @@
+syntax = "proto3";
+
+package iot_common.v1;
+
+enum IotStatusCode
+{
+  // generic codes
+  // 0x0 - 0x1F
+  IOTSTATUS_UNSPECIFIED                                       = 0x00;
+  // OK / SUCCESS
+  IOTSTATUS_OK                                                = 0x01;
+
+  // 0x20 - 0x3F
+  // user codes
+  IOTSTATUS_USER_NOT_FOUND                                    = 0x20; // user is not found / invalid
+  IOTSTATUS_USER_INSUFFICIENT_PRIVILEGES                      = 0x21; // user is found but does not have sufficient privileges to access resource/operation
+  IOTSTATUS_USER_AUTHENTICATION_FAILED                        = 0x22; // user might have provided incorrect credentials
+  IOTSTATUS_USER_DUPLICATE                                    = 0x23; // duplicate user/userid found
+
+  // 0x40 - 0x5F
+  // for encryption
+  IOTSTATUS_CERTIFICATE_INVALID                               = 0x40; // the certiciate credentials provided are invalid
+  IOTSTATUS_CERTIFICATE_EXPIRED                               = 0x41; // the certificate credentials was previously valid but expired
+
+  // 0x60 - 0x7F
+  // resource could be memory, disk space, handles, etc.
+  IOTSTATUS_LOCAL_RESOURCES_EXHAUSTED                         = 0x60; // resources on local/host machine exhausted
+  IOTSTATUS_REMOTE_RESOURCES_EXHAUSTED                        = 0x61; // resources on remote machine exhausted
+  IOTSTATUS_RESOURCE_CONFIG_INVALID                           = 0x62; // configuration to access a particular resource/set of resources is invalid
+
+  // 0x80 - 0x9F
+  // network
+  IOTSTATUS_LOCAL_NETWORK_INTEFACE_DOWN                       = 0x80; // local network interface (network adapters) on this machine detected to be down
+  IOTSTATUS_REMOTE_UNREACHABLE                                = 0x81; // network interface on this machine seems to be working but remote is determined to be not reachable or offline (could be temporary or momentarily)
+  IOTSTATUS_NETWORK_CONFIG_INVALID                            = 0x82; // the network configurations are invalid
+
+  // 0xA0 - 0xBF
+  // device
+  IOTSTATUS_DEVICE_CONFIG_INVALID                             = 0xA0; // device-related (backend IOT device like CNCs, robots, sensors, etc.) configurations are invalid
+  IOTSTATUS_DEVICE_NOT_FOUND                                  = 0xA1; // the device is not found
+  IOTSTATUS_DEVICE_NOT_READY                                  = 0xA2; // a device is not yet ready; it is still in an initializing phase
+  IOTSTATUS_DEVICE_BUSY                                       = 0xA3; // a device is busy and unable to respond (within time bound, this is more specific version of OPERATION_TIMEOUT 
+                                                                      // and could be used instead if the timeout is known to be due to busyness of device; it also implies that there is a chnace of succeeding later)                                
+
+  // 0xC0 - 0xDF
+  IOTSTATUS_SESSION_CONFIG_INVALID                            = 0xC0; // configuration for session is invalid
+  IOTSTATUS_SESSION_INVALID_STATE                             = 0xC1; // session is in invalid state and operations/requests cannot be resolved, re-negotiation may be needed
+  IOTSTATUS_SESSION_NOT_FOUND                                 = 0xC2; // session is not found, re-negotiation may be needed
+  IOTSTATUS_SESSION_BROKEN                                    = 0xC3; // TBD (may be discarded): connection or link is broken (may be temporary) leading to broken session
+  IOTSTATUS_SESSION_NEGOTIATION_IN_PROGRESS                   = 0xC4; // this code may be used to indicate session negotiation is in progress and client may need to wait (for complex session negotiation or multi-layered scenarios)
+  IOTSTATUS_SESSION_EXPIRED                                   = 0xC5; // session expired (reason to be in status message)
+
+  // 0xE0 - 0xFF (data-related including database, details will be provided in status message)
+  IOTSTATUS_REQUESTED_DATA_OR_RESOURCE_NOT_FOUND              = 0xE0; // data does not exist: 
+                                                                      //   1. if database exist and reachable, but such data definitions does not exist (example missing table)
+                                                                      //   2. if database exist and reachable, and data definitions exist, but empty datasets is abnormal and unexpected 
+                                                                      //      (such as some data should always exists before the service runs for the first time or before the service accepts incoming requests)
+                                                                      //       => if datasets can be empty and does not reflect an erroneous state, it will return OK even if there is no data
+  IOTSTATUS_REQUESTED_DATA_OR_RESOURCE_CANNOT_BE_RETRIEVED    = 0xE1; // storage (such as database) is not reachable
+  IOTSTATUS_DATA_SIZE_TOO_LARGE                               = 0xE2; // this could be due to static, dynamic or configured size constraints
+  IOTSTATUS_DATA_LOSS_OR_CORRUPTED                            = 0xE3; // unrecoverable data loss or corruption
+  IOTSTATUS_DATA_OR_RESOURCE_STORE_ERROR                      = 0xE4; // the storage for the requested data or resource is in some error state (details in status message)
+  // IOTSTATUS_DUPLICATE_DATA_REQUEST_ONGOING                    = 0xE5; // detected a duplicate data request that is currently being worked on
+  // IOTSTATUS_DUPLICATE_DATA_REQUEST_PENDING                    = 0xE6; // detected a duplicate data request that is currently pending (in a queue and not yet active)
+  // IOTSTATUS_DUPLICATE_DATA_REQUEST_PREVIOUSLY_ONGOING         = 0xE7; // detected a duplicate data request that was being worked on but now canceled due to client request
+  // IOTSTATUS_DUPLICATE_DATA_REQUEST_PREVIOUSLY_PENDING         = 0xE8; // detected a duplicate data request that was pending but now canceled due to client request
+  // IOTSTATUS_PREVIOUS_DATA_REQUEST_ONGOING                     = 0xE9; // detected a previous data request that is currently being worked on
+  // IOTSTATUS_PREVIOUS_DATA_REQUEST_PENDING                     = 0xEA; // detected a previous data request that is currently pending (in a queue and not yet active)
+
+  // 0x100 - 0x1FF
+  IOTSTATUS_OPERATION_CONFIG_INVALD                           = 0x100; // specifc configuration for the operation is invalid
+  IOTSTATUS_OPERATION_VERSION_INCOMPATIBILITY                 = 0x101; // the operation exists but version may have changed on remote
+  IOTSTATUS_OPERATION_TIMEOUT                                 = 0x102; // operation takes too long within the specified constraint and yet to be completed
+  IOTSTATUS_OPERATION_NOT_FOUND                               = 0x103; // operation not implemented
+  IOTSTATUS_OPERATION_INVALID_PARAMS                          = 0x104; // invalid parameters passed
+  IOTSTATUS_OPERATION_INVALID_REMOTE_STATE                    = 0x105; // some precondition is not met on remote for the operation to be performed
+  IOTSTATUS_OPERATION_INVALID_LOCAL_STATE                     = 0x106; // some precondition is not met locally for the operation to be performed
+  IOTSTATUS_OPERATION_ABORTED_BY_REMOTE                       = 0x107; // operation was cancelled on remote, reason in status message
+  IOTSTATUS_OPERATION_ABORTED_LOCALLY                         = 0x108; // operation was cancelled on this machine, reason in status message
+  // operation has range, iterative or offset semantics (such as seek, search, iterate) and fails or cannot be carried out due to out-of-range.
+  // supplied params that are out of valid range will return OPERATION_INVALID_PARAMS instead (eg. supplying a port number that is negative or greater than 65535)
+  IOTSTATUS_OPERATION_OUT_OF_RANGE                            = 0x109;
+  // operation is not authorized due to temporary change in authorization level or priveleges needed or invalid credentials/token supplied for a specific operation;
+  // if it's due to user rights, USER_INSUFFICIENT_PRIVILEGES will be returned instead
+  IOTSTATUS_OPERATION_UNAUTHORIZED                            = 0x110;
+  IOTSTATUS_OPERATION_IN_PROGRESS                             = 0x111; // operation in progress and waiting to complete
+  IOTSTATUS_OPERATION_PARTIAL_SUCCESS                         = 0x112; // operation succeeded partially, another operation might be invoked to get more details if applicable
+  IOTSTATUS_OPERATION_UNHANDLED_REMOTE_EXCEPTION              = 0x113; // an unhandled exception occurred on the server/service-host during an RPC operation
+
+  // 0x200 - 0x21F
+  IOTSTATUS_INTERFACE_NOT_IMPLEMENTED                         = 0x200; // messaging interface not implemented; this refers to entire interface instead of a single operation which will use OPERATION_NOT_FOUND
+  IOTSTATUS_INTERFACE_DEPRECATED                              = 0x201;
+  
+  // 0x300 - 0x3FF
+  // cloud-specific codes
+  IOTSTATUS_CLOUD_INITIALIZING                                = 0x300; // cloud is in the process of initializing its internal representation and efficiency data segments received from the gateway
+  IOTSTATUS_CLOUD_INVALID_TOKEN                               = 0x301; // token given from mobile is not inside cloud (cloud restarted / token invalidated due to cloud changes)
+  IOTSTATUS_CLOUD_PHONE_ID_NOT_FOUND                          = 0x302; // code indicating the 'phone id' field in the request parameters of an rpc call cannot be found
+
+  IOTSTATUS_UNEXPECTED_ERROR                                  = 0x7FFFFFFF; // unknown error or an error that was not foreseen (and thus not designed into the codes)
+}
+
+message IotStatus
+{
+  IotStatusCode status_code           = 1;  // status code that can be used by software to make decisions
+  optional string status_message      = 2;  // status message to present to user or to provide more detailed info/reason about the status
+  optional bytes internal_code_bytes  = 3;  // a string of bytes representing internal codes (if applicable) for info-only to help in troubleshooting
+                                            // this would usually be unused, or will be custom defined for each operation if there is a need
+}

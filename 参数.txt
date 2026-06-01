@@ -1,0 +1,56 @@
+QueryEfficiency
+---------------
+mask : 45
+返回
+Cutting -> Status Summary 的 Cutting Time
+Connected -> Status Summary 的 Connect
+UpTime -> Status Summary 的 Running Time
+Alarm -> Status Summary 的 Alarm Status
+
+
+QueryHistoricalEvent
+--------------------
+mask : 31
+返回
+Overload -> Graph 的 Overload
+CoordChange -> Graph 的 CoordChange
+StartNCProgram -> Graph 的 Program
+ToolCompensationData -> Graph 的 ToolChange
+ToolSwap -> Graph 的 Tools
+ModeChange -> Graph 的  MachineMode
+
+QueryHistoricalBar
+--------------------
+mask : 29
+返回
+Running -> Graph 的 Running
+Alarm -> Graph 的 Alarm; 'VALUE' 的值可以用来填左下的 Alarms
+Spindle -> Graph 的 Spindle RPM
+Feedrate -> Graph 的 Feedrate
+
+
+QueryHistoricalGraph 
+-------------------
+mask : 1
+返回
+FeedrateOverride -> Graph 的 Feed Override
+
+
+QueryChangeRecord
+-----------------
+mask : 7
+返回
+CoordChange -> Coordinate Change Record
+ToolCompensationData -> Tool Change Record
+PeakLoad -> PeakLoad Time
+
+
+QueryUsagePeriod
+----------------
+mask : 7
+返回
+Tool -> Tool Usage
+NCProgram -> NC Program Usage
+MachineMode -> Machine Mode
+
+

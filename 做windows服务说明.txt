@@ -1,0 +1,9 @@
+启动 node install-service.js
+查看所有正在运行的服务 sc query
+管理员停止服务 net stop "My Node App"
+
+
+
+删除服务
+管理员运行 PowerShell
+sc.exe delete "My Node App"

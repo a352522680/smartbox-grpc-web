@@ -1,0 +1,16 @@
+2026-03-25 09:19:51 - Starting D:\Nodejs\node.exe  --harmony D:\NewWork\GRPC页面\GRPC-WEB\smartbox-grpc-web-master@1ae4c16297f\node_modules\node-windows\lib\wrapper.js --file D:\NewWork\GRPC页面\GRPC-WEB\smartbox-grpc-web-master@1ae4c16297f\index.js --scriptoptions= --log "SmartBox GRPC Service wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2026-03-25 09:19:51 - Started 26328
+2026-03-25 09:26:14 - Stopping smartboxgrpcservice.exe
+2026-03-25 09:26:14 - ProcessKill 26328
+2026-03-25 09:26:15 - Found child process: 2756 Name: conhost.exe
+2026-03-25 09:26:15 - Found child process: 23640 Name: node.exe
+2026-03-25 09:26:15 - Stopping process 2756
+2026-03-25 09:26:15 - Send SIGINT 2756
+2026-03-25 09:26:15 - SIGINT to 2756 failed - Killing as fallback
+2026-03-25 09:26:15 - Stopping process 23640
+2026-03-25 09:26:15 - Send SIGINT 23640
+2026-03-25 09:26:15 - SIGINT to 23640 failed - Killing as fallback
+2026-03-25 09:26:15 - Stopping process 26328
+2026-03-25 09:26:15 - Send SIGINT 26328
+2026-03-25 09:26:15 - SIGINT to 26328 failed - Killing as fallback
+2026-03-25 09:26:15 - Finished smartboxgrpcservice.exe

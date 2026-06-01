@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>水能源月度推移报表</title>
+  <link rel="stylesheet" href="./css/Nav.css">
+  <link rel="stylesheet" href="./css/header.css">
+  <link rel="stylesheet" href="./css/water_monthly_shift_report.css">
+  <script src="./js/jquery.min.js"></script>
+  <script src="./js/water_monthly_shift_report.js"></script>
+  <script src="./js/Nav.js"></script>
+  <script src="./js/echarts.min.js"></script>
+
+</head>
+<body>
+  <div id="header">
+    <div id="TopBox_left">
+        <button class="icon-button" id="menu-button" type="button" aria-label="打开菜单">
+            <img class="icon-image icon-image-menu" src="./img/menu.svg" alt="" />
+        </button>
+    </div>
+    <div id="Header">
+      <h1 id="HeaderTitle">水能源年度推移报表</h1>
+    </div>
+  </div>
+  <div class="dashboard-shell water-monthly-shell">
+    <div class="water-month-board">
+      <section class="water-monthly-filter-row" aria-label="Filter controls">
+          <div class="water-monthly-filter-group">
+            <label class="water-monthly-filter-label" for="water-start-year">年度</label>
+            <div class="water-monthly-inline-range">
+              <input id="water-start-year" class="water-monthly-input water-monthly-input-year" type="number" min="2018" max="2035" value="2018">
+              
+            </div>
+          </div>
+
+          <div class="water-monthly-filter-actions">
+            <button class="toolbar-button water-monthly-search-button" type="button">搜索</button>
+            <button class="toolbar-button water-monthly-reset-button" type="button">重置</button>
+          </div>
+      </section>
+      <div class="water-monthly-chart-card">
+        <div id="water-monthly-chart"></div>
+      </div>
+      <section class="water-monthly-table-shell" aria-label="Monthly water summary table">
+        <div class="water-monthly-table-wrap">
+          <table class="water-monthly-table">
+            <thead>
+              <tr>
+                <th>水</th>
+                <th>04月</th>
+                <th>05月</th>
+                <th>06月</th>
+                <th>07月</th>
+                <th>08月</th>
+                <th>09月</th>
+                <th>10月</th>
+                <th>11月</th>
+                <th>12月</th>
+                <th>01月</th>
+                <th>02月</th>
+                <th>03月</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2025实际</td>
+                <td>221.00</td><td>224.00</td><td>232.00</td><td>263.39</td><td>348.50</td><td>266.61</td><td>282.00</td><td>178.29</td><td>188.28</td><td>161.72</td><td>126.29</td><td>0.00</td>
+              </tr>
+              <tr>
+                <td>2025目标</td>
+                <td>210.50</td><td>203.69</td><td>225.86</td><td>276.00</td><td>221.00</td><td>234.00</td><td>209.00</td><td>187.00</td><td>213.00</td><td>164.00</td><td>162.00</td><td>315.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </div>
+</body>
+</html>
