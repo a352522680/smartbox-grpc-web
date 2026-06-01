@@ -24,17 +24,23 @@
 /* ===== 侧边导航菜单相关 CSS ===== */
 
 .nav-overlay {
-    position: absolute;
+    position: fixed;
     background: var(--nav-overlay-bg);
     backdrop-filter: blur(2px);
     z-index: 40;
     left: 0;
     top: 0;
-    bottom: 0;
     width: 100%;
     height: 100%;
-    right: 0;
-    margin: auto;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity, visibility;
+}
+
+.nav-overlay:not(.hidden) {
+    opacity: 1;
+    visibility: visible;
 }
 
 .nav-drawer {
@@ -50,6 +56,15 @@
     display: grid;
     grid-template-rows: auto minmax(0, 1fr) auto;
     gap: 10px;
+    transform: translateX(-100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+.nav-overlay:not(.hidden) .nav-drawer {
+    transform: translateX(0);
 }
 
 .nav-drawer-header {
@@ -129,9 +144,10 @@
     font-weight: 600;
     letter-spacing: 0.05em;
     cursor: pointer;
-    transition: color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    transition: color 0.25s cubic-bezier(0.4, 0, 0.2, 1), background 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     background: transparent;
     color: var(--nav-text-main);
+    will-change: background, color;
 }
 
 .nav-group-title:hover {
@@ -142,12 +158,12 @@
 .nav-group.is-open .nav-group-title {
     background: linear-gradient(135deg, var(--nav-primary) 0%, #1598bd 100%);
     color: #ffffff;
-    box-shadow: 0 10px 22px rgba(15, 127, 168, 0.18);
 }
 
 .nav-group-arrow {
-    transition: transform 0.2s ease;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     font-size: 14px;
+    will-change: transform;
 }
 
 .nav-group.is-open .nav-group-arrow {
@@ -155,14 +171,20 @@
 }
 
 .nav-group-items {
-    display: none;
+    overflow: hidden;
     flex-direction: column;
     gap: 6px;
-    padding: 2px 0 2px 10px;
+    padding: 0 0 0 10px;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1), padding 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: max-height, opacity;
 }
 
 .nav-group.is-open .nav-group-items {
-    display: flex;
+    max-height: 500px;
+    opacity: 1;
+    padding: 2px 0 2px 10px;
 }
 
 /* 2级导航中的页面按钮 */
@@ -240,6 +262,7 @@
     position: relative;
     overflow: hidden;
     color: var(--nav-text-main);
+    margin-bottom: 5px;
 }
 
 .nav-page-button:hover {

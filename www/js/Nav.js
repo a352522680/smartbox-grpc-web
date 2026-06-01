@@ -28,6 +28,10 @@ $(function() {
                         <div class="nav-group-items" data-nav-group="energy">
                             <a class="nav-page-button" href="./water_yearly_shift_report.html">水能源年度推移表</a>
                             <a class="nav-page-button" href="./water_monthly_shift_report.html">水能源月度推移表</a>
+                            <a class="nav-page-button" href="./air_yearly_shift_report.html">气压能源年度推移表</a>
+                            <a class="nav-page-button" href="./air_monthly_shift_report.html">气压能源月度推移表</a>
+                            <a class="nav-page-button" href="./Electric_yearly_shift_report.html">电能源年度推移表</a>
+                            <a class="nav-page-button" href="./Electric_monthly_shift_report.html">电能源月度推移表</a>
                         </div>
                     </div>
                     <div class="nav-group">

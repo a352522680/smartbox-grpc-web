@@ -1,12 +1,12 @@
-﻿$(function (){
-    $("#water-start-year").val(new Date().getFullYear()-1);
+$(function (){
+    $("#electric-start-year").val(new Date().getFullYear()-1);
 
-    var chartDom = document.getElementById('water-monthly-chart');
+    var chartDom = document.getElementById('electric-monthly-chart');
     var myChart = echarts.init(chartDom);
 
     var option = {
         title: {
-            text: '2025 年度月用水量 (T)',
+            text: '2025 年度月用电量 (kWh)',
             left: '20px',
             top: '10px',
             textStyle: {
@@ -63,21 +63,21 @@
             {
                 name: '加工',
                 type: 'bar',
-                    stack: 'total', // 关键：同名 stack 会堆叠在一起
-                    barWidth: '35%', // 柱子宽度
-                    itemStyle: {
-                        color: '#ffb11f' // 深红色
-                    },
+                stack: 'total',
+                barWidth: '35%',
+                itemStyle: {
+                    color: '#ffb11f'
+                },
                 stack: '2025 实际',
                 data: [258, 102, 312, 72, 216, 132, 288, 54, 150, 234, 96, 204]
             },
             {
                 name: '组装',
                 type: 'bar',
-                    stack: 'total',
-                    itemStyle: {
-                        color: '#69c41b' // 草绿色
-                    },
+                stack: 'total',
+                itemStyle: {
+                    color: '#69c41b'
+                },
                 stack: '2025 实际',
                 data: [172, 68, 208, 48, 144, 88, 192, 36, 100, 156, 64, 136]
             },

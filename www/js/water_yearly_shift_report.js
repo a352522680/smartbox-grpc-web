@@ -67,21 +67,26 @@ $(function(){
                 }
             },
             series: [
-                {
-                    name: '水实际',
+                 {
+                    name: '加工',
                     type: 'bar',
-                    barWidth: '45%',
-                     itemStyle: {
-                        color: new echarts.graphic.LinearGradient(
-                            0, 0, 0, 1, // 从 (x1, y1) 到 (x2, y2)，即从上到下
-                            [
-                                { offset: 0, color: '#4c84df' }, // 0% 处的颜色
-                                { offset: 1, color: '#2e63c5' }  // 100% 处的颜色
-                            ]
-                        ),
-                        borderRadius: [4, 4, 0, 0]
-                    },
-                    data: [3900, 5700, 8200, 3900, 3100, 1800, 2400, 2600]
+                        stack: 'total', // 关键：同名 stack 会堆叠在一起
+                        barWidth: '35%', // 柱子宽度
+                        itemStyle: {
+                            color: '#ffb11f' // 深红色
+                        },
+                    
+                    data: [2580, 1020, 3120, 720, 2160, 1320, 2880, 540, 1500, 2340, 960, 2040]
+                },
+                {
+                    name: '组装',
+                    type: 'bar',
+                        stack: 'total',
+                        itemStyle: {
+                            color: '#69c41b' // 草绿色
+                        },
+                    
+                    data: [1720, 680, 2080, 480, 1440, 880, 1920, 360, 1000, 1506, 640, 1036]
                 },
                 {
                     name: '水目标',

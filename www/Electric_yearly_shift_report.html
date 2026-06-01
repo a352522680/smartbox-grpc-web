@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>电能源年度推移报表</title>
+  <link rel="stylesheet" href="./css/Nav.css">
+  <link rel="stylesheet" href="./css/header.css">
+  <link rel="stylesheet" href="./css/electric_yearly_shift_report.css">
+  <script src="./js/jquery.min.js"></script>
+  <script src="./js/electric_yearly_shift_report.js"></script>
+  <script src="./js/Nav.js"></script>
+  <script src="./js/echarts.min.js"></script>
+</head>
+<body>
+  <div id="header">
+    <div id="TopBox_left">
+        <button class="icon-button" id="menu-button" type="button" aria-label="打开菜单">
+            <img class="icon-image icon-image-menu" src="./img/menu.svg" alt="" />
+        </button>
+    </div>
+    <div id="Header">
+      <h1 id="HeaderTitle">电能源年度推移报表</h1>
+    </div>
+  </div>
+  <div class="dashboard-shell electric-yearly-shell">
+    <div class="electric-yearly-board">
+      <section class="electric-yearly-filter-row" aria-label="Filter controls">
+        <div class="electric-yearly-filter-group">
+          <label class="electric-yearly-filter-label" for="electric-yearly-start-year">年</label>
+          <div class="electric-yearly-inline-range">
+            <input id="electric-yearly-start-year" class="electric-yearly-input electric-yearly-input-year" type="number" min="2018" value="2018">
+            <span class="electric-yearly-range-separator">-</span>
+            <input id="electric-yearly-end-year" class="electric-yearly-input electric-yearly-input-year" type="number" min="2018">
+          </div>
+        </div>
+
+        <div class="electric-yearly-filter-actions">
+          <button class="toolbar-button electric-yearly-search-button" type="button">搜索</button>
+          <button class="toolbar-button electric-yearly-reset-button" type="button">重置</button>
+        </div>
+      </section>
+      <div class="electric-yearly-chart-card">
+        <div id="electric-yearly-chart"></div>
+      </div>
+      <section class="electric-yearly-table-shell">
+        <div class="electric-yearly-table-wrap">
+          <table class="electric-yearly-table">
+            <thead id="electric-yearly-table-head">
+              <tr>
+                <th>电</th>
+                <th>2018</th><th>2019</th><th>2020</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th>
+              </tr>
+            </thead>
+            <tbody id="electric-yearly-table-body">
+              <tr>
+                <td>电目标</td>
+                <td>3760.00</td><td>3628.00</td><td>3497.00</td><td>3366.00</td><td>3234.00</td><td>2977.00</td><td>2008.00</td><td>2508.00</td>
+              </tr>
+              <tr>
+                <td>加工</td>
+                <td>3702.00</td><td>5331.00</td><td>7511.00</td><td>3715.00</td><td>3025.82</td><td>1851.15</td><td>2504.03</td><td>2620.40</td>
+              </tr>
+              <tr>
+                <td>组装</td>
+                <td>3702.00</td><td>5331.00</td><td>7511.00</td><td>3715.00</td><td>3025.82</td><td>1851.15</td><td>2504.03</td><td>2620.40</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

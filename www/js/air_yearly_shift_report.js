@@ -1,12 +1,12 @@
-﻿$(function (){
-    $("#water-start-year").val(new Date().getFullYear()-1);
+$(function(){
+    $("#air-yearly-end-year").val(new Date().getFullYear()-1);
 
-    var chartDom = document.getElementById('water-monthly-chart');
+    var chartDom = document.getElementById('air-yearly-chart');
     var myChart = echarts.init(chartDom);
 
     var option = {
         title: {
-            text: '2025 年度月用水量 (T)',
+            text: '2018-2025 年度气压用量(T)',
             left: '20px',
             top: '10px',
             textStyle: {
@@ -22,7 +22,7 @@
             }
         },
         legend: {
-            data: ['加工', '组装', '2025 目标'],
+            data: ['气压实际', '气压目标'],
             right: '20px',
             top: '15px',
             icon: 'circle',
@@ -37,7 +37,7 @@
         },
         xAxis: {
             type: 'category',
-            data: ['04 月', '05 月', '06 月', '07 月', '08 月', '09 月', '10 月', '11 月', '12 月', '01 月', '02 月', '03 月'],
+            data: ['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
             axisTick: {
                 alignWithLabel: true
             },
@@ -50,52 +50,57 @@
         yAxis: {
             type: 'value',
             min: 0,
-            max: 650,
-            interval: 100,
+            max: 8000,
+            interval: 1600,
             splitLine: {
                 lineStyle: {
                     type: 'solid',
                     color: '#f0f0f0'
                 }
+            },
+            axisLabel: {
+                formatter: function (value) {
+                    return value.toLocaleString();
+                }
             }
         },
         series: [
-            {
+             {
                 name: '加工',
                 type: 'bar',
-                    stack: 'total', // 关键：同名 stack 会堆叠在一起
-                    barWidth: '35%', // 柱子宽度
+                    stack: 'total',
+                    barWidth: '35%',
                     itemStyle: {
-                        color: '#ffb11f' // 深红色
+                        color: '#ffb11f'
                     },
-                stack: '2025 实际',
-                data: [258, 102, 312, 72, 216, 132, 288, 54, 150, 234, 96, 204]
+                
+                data: [2580, 1020, 3120, 720, 2160, 1320, 2880, 540, 1500, 2340, 960, 2040]
             },
             {
                 name: '组装',
                 type: 'bar',
                     stack: 'total',
                     itemStyle: {
-                        color: '#69c41b' // 草绿色
+                        color: '#69c41b'
                     },
-                stack: '2025 实际',
-                data: [172, 68, 208, 48, 144, 88, 192, 36, 100, 156, 64, 136]
+                
+                data: [1720, 680, 2080, 480, 1440, 880, 1920, 360, 1000, 1506, 640, 1036]
             },
             {
-                name: '2025 目标',
+                name: '气压目标',
                 type: 'line',
                 symbol: 'emptyCircle',
                 symbolSize: 8,
                 lineStyle: {
                     width: 2,
-                    color: '#5b9bd5'
+                    color: '#f59e0b'
                 },
                 itemStyle: {
-                    color: '#5b9bd5',
-                    borderColor: '#5b9bd5',
+                    color: '#f59e0b',
+                    borderColor: '#f59e0b',
                     borderWidth: 1
                 },
-                data: [280, 410, 420, 320, 290, 410, 320, 230, 460, 340, 320, 290]
+                data: [4200, 4050, 3900, 3750, 3600, 3350, 2200, 2600]
             }
         ]
     };
