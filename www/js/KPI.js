@@ -321,7 +321,8 @@ function saveToServer() {
         ];
 
         columns.forEach(function(colDef) {
-            const targetValue = parseInt($cells.eq(colDef.col).text());
+            const rawValue = parseFloat($cells.eq(colDef.col).text());
+            const targetValue = Math.round(rawValue);  // 四舍五入取整
             
             allItems.push({
                 Year: year,

@@ -138,9 +138,21 @@ function Gmain(tabId, ip, port, Start, End, type, retryCount = 0) {
     let startTime = getStart(Start);
     let endTime = getEnd(End);
     const now = new Date();
+    let currentCall = null;
+
+    const trackCall = (call) => {
+      currentCall = call;
+      activeCalls[dictKey] = { ip, ts: now, start: Start, end: End, call };
+    };
+
+    const clearTrackedCall = () => {
+      if (activeCalls[dictKey] && activeCalls[dictKey].call === currentCall) {
+        delete activeCalls[dictKey];
+      }
+    };
 
     const grpcCallHandler = (err, res) => {
-        client.close();
+      clearTrackedCall();
       if (err == null) {
         try {
           let endTimestamp = Date.now();
@@ -176,27 +188,27 @@ function Gmain(tabId, ip, port, Start, End, type, retryCount = 0) {
     switch (type) {
       case "QueryEfficiency":
         requestParams.mask = 45;
-        activeCalls[dictKey] = { ip, ts: now, start: Start, end: End, call: client.QueryEfficiency(requestParams, grpcCallHandler) };
+        trackCall(client.QueryEfficiency(requestParams, grpcCallHandler));
         break;
       case "QueryHistoricalEvent":
         requestParams.mask = 63;
-        activeCalls[dictKey] = { ip, ts: now, start: Start, end: End, call: client.QueryHistoricalEvent(requestParams, grpcCallHandler) };
+        trackCall(client.QueryHistoricalEvent(requestParams, grpcCallHandler));
         break;
       case "QueryHistoricalBar":
         requestParams.mask = 29;
-        activeCalls[dictKey] = { ip, ts: now, start: Start, end: End, call: client.QueryHistoricalBar(requestParams, grpcCallHandler) };
+        trackCall(client.QueryHistoricalBar(requestParams, grpcCallHandler));
         break;
       case "QueryHistoricalGraph":
         requestParams.mask = 1;
-        activeCalls[dictKey] = { ip, ts: now, start: Start, end: End, call: client.QueryHistoricalGraph(requestParams, grpcCallHandler) };
+        trackCall(client.QueryHistoricalGraph(requestParams, grpcCallHandler));
         break;
       case "QueryChangeRecord":
         requestParams.mask = 7;
-        activeCalls[dictKey] = { ip, ts: now, start: Start, end: End, call: client.QueryChangeRecord(requestParams, grpcCallHandler) };
+        trackCall(client.QueryChangeRecord(requestParams, grpcCallHandler));
         break;
       case "QueryUsagePeriod":
         requestParams.mask = 7;
-        activeCalls[dictKey] = { ip, ts: now, start: Start, end: End, call: client.QueryUsagePeriod(requestParams, grpcCallHandler) };
+        trackCall(client.QueryUsagePeriod(requestParams, grpcCallHandler));
         break;
       default:
         logger.error(`Unknown gRPC type: ${type}`);
@@ -252,12 +264,16 @@ router.get('/useBatch', async (req, res) => {
     let start = req.query.start;
     let end = req.query.end;
     let type = req.query.type;
-    const tabId = req.headers['tab-id'];
-
+    var MR=Math.random();
+    const tabId = MR;
+    
     let isCancelled = false;
     const activeGrpcClients = [];
     // 监听客户端断开连接
-    req.on('close', () => {
+    res.on('close', () => {
+        if (res.writableEnded) {
+            return;
+        }
         isCancelled = true;
         console.log(`客户端 ${tabId} 断开连接，取消批量查询`);
                 // 取消所有活跃的 gRPC 调用
@@ -294,7 +310,7 @@ router.get('/useBatch', async (req, res) => {
             const batch = options.slice(i, i + batchSize);
             
             const batchPromises = batch.map(option => {
-                const uniqueTabId = `${tabId}_${option.label}_${option.ip}_${option.port}`;
+                const uniqueTabId = `${MR}_${option.label}_${option.ip}_${option.port}`;
                 
                 // 根据 ShowType 选择不同的查询方法
                 if (option.ShowType === '2') {

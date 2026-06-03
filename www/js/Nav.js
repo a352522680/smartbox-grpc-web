@@ -43,6 +43,15 @@ $(function() {
                             <a class="nav-page-button" href="./KPI.html">年度KPI设置</a>
                         </div>
                     </div>
+                    <div class="nav-group">
+                        <button class="nav-group-title" data-nav-group="settings">
+                            <span>设备稼动</span>
+                            <span class="nav-group-arrow">▼</span>
+                        </button>
+                        <div class="nav-group-items" data-nav-group="settings">
+                            <a class="nav-page-button" href="./equipment_operation_front.html">设备稼动全工程</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="nav-drawer-footer">
                     <div class="nav-user-row">

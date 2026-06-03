@@ -327,14 +327,14 @@ function refreshEnergyParameterData() {
         }
     });
     
-    // ========== 获取2025年目标数据（去年） ==========
+    // ========== 获取2026年目标数据 ==========
     $.ajax({
         url: "/EnergyTarget/getEnergyTarget",   
         type: "get",           
         dataType: "json",      
         async: false,
         data: {
-            Year: currentRealYear - 1
+            Year: currentRealYear
         },
         success: function (response) {
             if (response.success) {

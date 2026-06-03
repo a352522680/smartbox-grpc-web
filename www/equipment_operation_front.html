@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>设备稼动-全工程</title>
+  <script>
+    (() => {
+      // 用于匹配 styles.css 的 red-white 主题
+      const theme = "red-white";
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.style.colorScheme = "light";
+    })();
+  </script>
+  <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="stylesheet" href="./css/Nav.css">
+  <link rel="stylesheet" href="./css/header.css">
+  <link rel="stylesheet" href="./css/equipment_operation_front.css">
+  <script src="./js/jquery.min.js"></script>
+  <script src="./js/Nav.js"></script>
+  <script src="./js/echarts.min.js"></script>
+
+</head>
+<body>
+  <div id="header">
+    <div id="TopBox_left">
+        <button class="icon-button" id="menu-button" type="button" aria-label="打开菜单">
+            <img class="icon-image icon-image-menu" src="./img/menu.svg" alt="" />
+        </button>
+    </div>
+    <div id="Header">
+      <h1 id="HeaderTitle">设备稼动-全工程</h1>
+    </div>
+  </div>
+  <div class="dashboard-shell operation-report-shell">
+    <!-- 仅插入 operation-report-board 内的内容（来自你提供的现成页面） -->
+    <section class="operation-report-board" aria-label="稼动看板">
+      <div class="operation-report-controls">
+        <label class="operation-report-search">
+          <span class="operation-report-search-icon" aria-hidden="true">⌕</span>
+          <span class="sr-only">搜索设备</span>
+          <input id="operation-search-input" type="search" placeholder="搜索设备名 / 型号" autocomplete="off" />
+        </label>
+
+        <div class="operation-process-tabs" role="tablist" aria-label="工程选择">
+          <button class="operation-process-tab is-active" type="button" role="tab" aria-selected="true" data-process-tab="all">全工程</button>
+          <button class="operation-process-tab" type="button" role="tab" aria-selected="false" data-process-tab="front">前工程</button>
+          <button class="operation-process-tab" type="button" role="tab" aria-selected="false" data-process-tab="grinding">研削工程</button>
+          <button class="operation-process-tab" type="button" role="tab" aria-selected="false" data-process-tab="electrical">电气工程</button>
+        </div>
+      </div>
+
+      <div class="operation-table-shell" aria-label="设备稼动时间表">
+        <table class="operation-table">
+          <colgroup>
+            <col class="operation-col-machine" />
+            <col class="operation-col-model" />
+            <col class="operation-col-target" />
+            <col class="operation-col-rate" />
+            <col class="operation-col-process" />
+            <col class="operation-col-subprocess" />
+            <col class="operation-col-timeline" />
+          </colgroup>
+          <thead>
+            <tr>
+              <th class="operation-date-head operation-sticky-machine">03-10</th>
+              <th class="operation-group-head" colspan="3">设备可视化管理（稼动率目标）</th>
+              <th class="operation-group-head" colspan="2">工程区分</th>
+              <th class="operation-timeline-head" rowspan="2">
+                <div class="operation-timeline-summary">
+                  <span class="operation-timeline-title">日班时间点</span>
+                  <span class="operation-status-legend" aria-label="状态图例">
+                    <span class="operation-status-chip"><span class="status-dot status-running"></span>运行</span>
+                    <span class="operation-status-chip"><span class="status-dot status-stopped"></span>停止</span>
+                    <span class="operation-status-chip"><span class="status-dot status-alarm"></span>报警</span>
+                    <span class="operation-status-chip"><span class="status-dot status-shutdown"></span>未知</span>
+                    <span class="operation-status-chip"><span class="status-dot status-disconnected"></span>断联</span>
+                  </span>
+                  <span class="operation-board-meta">
+                    <span id="StatisticalDay">统计日：03-10</span>
+                  </span>
+                </div>
+                <div class="operation-time-scale" id="operation-time-scale" aria-hidden="true"></div>
+              </th>
+            </tr>
+            <tr>
+              <th class="operation-sticky operation-sticky-machine">设备名</th>
+              <th class="operation-sticky operation-sticky-model">型号</th>
+              <th class="operation-sticky operation-sticky-target">稼动目标</th>
+              <th class="operation-sticky operation-sticky-rate">稼动率</th>
+              <th class="operation-sticky operation-sticky-process">所属工程</th>
+              <th class="operation-sticky operation-sticky-subprocess">所属子工程</th>
+            </tr>
+          </thead>
+          <tbody id="operation-board-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <script src="./js/equipment_operation_front.js"></script>
+</body>
+</html>

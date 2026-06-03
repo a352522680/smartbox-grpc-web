@@ -22,6 +22,48 @@ var DayQ_Target=[];//目标气量
 var Year="";
 var Month="";
 var totalWorkDaysOfMonth = "";
+var energyDashboardLoadingCount = 0;
+
+function showEnergyDashboardLoading(message, isError) {
+    var $loading = $("#energy-dashboard-loading");
+
+    if ($loading.length === 0) {
+        $loading = $(`
+            <div id="energy-dashboard-loading" class="energy-dashboard-loading">
+                <div class="energy-dashboard-loading-box">
+                    <span class="energy-dashboard-loading-spinner"></span>
+                    <span class="energy-dashboard-loading-text"></span>
+                </div>
+            </div>
+        `);
+        $("body").append($loading);
+    }
+
+    $loading.toggleClass("is-error", !!isError);
+    $loading.find(".energy-dashboard-loading-text").text(message || "数据加载中...");
+    $loading.stop(true, true).fadeIn(120);
+}
+
+function hideEnergyDashboardLoading() {
+    energyDashboardLoadingCount = Math.max(0, energyDashboardLoadingCount - 1);
+    if (energyDashboardLoadingCount === 0) {
+        $("#energy-dashboard-loading").stop(true, true).fadeOut(160);
+    }
+}
+var isFirstLoad = true;
+function beginEnergyDashboardLoading() {
+    energyDashboardLoadingCount += 1;
+    showEnergyDashboardLoading("数据加载中...");
+}
+
+function failEnergyDashboardLoading() {
+    energyDashboardLoadingCount = 0;
+    showEnergyDashboardLoading("数据加载失败，请稍后重试", true);
+    setTimeout(function() {
+        $("#energy-dashboard-loading").stop(true, true).fadeOut(220);
+    }, 1800);
+}
+
 $(function () { 
 
     // 初始加载
@@ -69,6 +111,11 @@ function loadData() {
         Month = Month + 9;   // 1→10, 2→11, 3→12
     }
     var shortYear = String(Year).slice(-2);
+    if(month+1<=3){
+        let prevYear = Year - 1;
+        shortYear = String(prevYear).slice(-2);
+    }
+
     $("#NYD1,#NYD2,#NYD3").html(`${shortYear}年${calendarMonth}月电量实际（1000kwh）`)
     $("#NYD18_1").html(`18年${calendarMonth}月电量实际（1000kwh）`)
     $("#NYD18_1_1").html(`18年${calendarMonth}月电量实际（1000kwh）`)
@@ -79,12 +126,11 @@ function loadData() {
     $("#NYS18_1,#NYS18_2").html(`18年${calendarMonth}月水量实际（T）`)
     $("#NYQ1,#NYQ2,#NYQ3").html(`${shortYear}年${calendarMonth}月气量实际（Nm³）`)
     $("#NYQ1_1,#NYQ2_1,#NYQ3_1").html(`${shortYear}年${calendarMonth}月气量目标（Nm³）`)
-    $("#NYQ18_1,#NYQ18_2").html(`18年${calendarMonth}月气量实际（Nm³）`)
-    $("#LastYearDtext").html(`${shortYear-1}年度电量目标（1000kwh）`)
+    $("#LastYearDtext").html(`${shortYear}年度电量目标（1000kwh）`)
     $("#LastYearDvalue").html(LastYear[0]);
-    $("#LastYearStext").html(`${shortYear-1}年度水量目标（T）`)
+    $("#LastYearStext").html(`${shortYear}年度水量目标（T）`)
     $("#LastYearSvalue").html(LastYear[1]);
-    $("#LastYearQtext").html(`${shortYear-1}年度气量目标（Nm³）`)
+    $("#LastYearQtext").html(`${shortYear}年度气量目标（Nm³）`)
     $("#LastYearQvalue").html(LastYear[2]);
 
     var cumulativeWorkDays = "0";
@@ -94,7 +140,7 @@ function loadData() {
         url: "/Local/read",  
         async: false, 
         type: "get",           
-        dataType: "json",      
+        dataType: "json",
         success: function (data) {
             totalWorkDaysOfMonth=data.Plan;
             cumulativeWorkDays=data.fact;
@@ -115,7 +161,6 @@ function loadData() {
     
     $("#Y18D").html(Year18[0])
     $("#Y18S").html(Year18[1])
-    $("#Y18Q").html(Year18[2])
     
     
     $("#JGD_D").html(JGD_D_Monthly)
@@ -136,8 +181,6 @@ function loadData() {
     $("#JGD_S_18").html(JGD_S18[Month-1])
     $("#DLD_S_18").html(DLD_S18[Month-1])
 
-    $("#JGD_Q_18").html(JGD_Q18[Month-1])
-    $("#DLD_Q_18").html(DLD_Q18[Month-1])
 
     // 使用当前真实时间
     const current = getCurrentTimeString();
@@ -153,10 +196,17 @@ function Main(){
     $.ajax({
         url: "/Energy/dashboard",   
         type: "get",           
-        dataType: "json",      
+        dataType: "json",
+        beforeSend: function() {
+             // 只在第一次加载时显示遮罩
+            if (isFirstLoad) {
+                beginEnergyDashboardLoading();
+            }
+        },
         success: function (data) {
             // 处理返回的数据
             if (data.success) {
+                 
                 var datas=data.data.utility_dashboard_data
                  
                 var JG_S_D_SUM=0;
@@ -166,9 +216,10 @@ function Main(){
                     //加工栋-组立栋实测
                     if(datas.facility_utility_usage_cur_month[i].facility_uid=="1"){
                         
-                        $("#JG_S_D1").html(Math.round(datas.facility_utility_usage_cur_month[i].utility_usage[0].energy_usage/1000) )
-                        $("#JG_S_S1").html(Math.round(datas.facility_utility_usage_cur_month[i].utility_usage[0].water_usage))
-                        $("#JG_S_Q1").html(Math.round(datas.facility_utility_usage_cur_month[i].utility_usage[0].air_usage))
+                        $("#JG_S_D1").html(parseFloat((datas.facility_utility_usage_cur_month[i].utility_usage[0].energy_usage / 1000).toFixed(1)))
+                        
+                        $("#JG_S_S1").html(parseFloat(datas.facility_utility_usage_cur_month[i].utility_usage[0].water_usage).toFixed(1))
+                        $("#JG_S_Q1").html(parseFloat(datas.facility_utility_usage_cur_month[i].utility_usage[0].air_usage).toFixed(1))
                         JG_S_D_SUM+=parseFloat(datas.facility_utility_usage_cur_month[i].utility_usage[0].energy_usage)
                         JG_S_S_SUM+=parseFloat(datas.facility_utility_usage_cur_month[i].utility_usage[0].water_usage)
                         JG_S_Q_SUM+=parseFloat(datas.facility_utility_usage_cur_month[i].utility_usage[0].air_usage)
@@ -194,9 +245,10 @@ function Main(){
                     }
                     else{
                         
-                        $("#JG_S_D2").html(Math.round(datas.facility_utility_usage_cur_month[i].utility_usage[0].energy_usage/1000) )
-                        $("#JG_S_S2").html(Math.round(datas.facility_utility_usage_cur_month[i].utility_usage[0].water_usage))
-                        $("#JG_S_Q2").html(Math.round(datas.facility_utility_usage_cur_month[i].utility_usage[0].air_usage))
+                        $("#JG_S_D2").html(parseFloat((datas.facility_utility_usage_cur_month[i].utility_usage[0].energy_usage / 1000).toFixed(1)))
+                        parseFloat((datas.facility_utility_usage_cur_month[i].utility_usage[0].energy_usage / 1000).toFixed(1))
+                        $("#JG_S_S2").html(parseFloat(datas.facility_utility_usage_cur_month[i].utility_usage[0].water_usage).toFixed(1))
+                        $("#JG_S_Q2").html(parseFloat(datas.facility_utility_usage_cur_month[i].utility_usage[0].air_usage).toFixed(1))
                         JG_S_D_SUM+=parseFloat(datas.facility_utility_usage_cur_month[i].utility_usage[0].energy_usage)
                         JG_S_S_SUM+=parseFloat(datas.facility_utility_usage_cur_month[i].utility_usage[0].water_usage)
                         JG_S_Q_SUM+=parseFloat(datas.facility_utility_usage_cur_month[i].utility_usage[0].air_usage)
@@ -224,7 +276,7 @@ function Main(){
                     }
                     
                 }
-                $("#JG_S_D_SUM").html(Math.round(Math.round(JG_S_D_SUM/1000)) )
+                $("#JG_S_D_SUM").html(parseFloat((JG_S_D_SUM / 1000).toFixed(1)))
                 $("#JG_S_S_SUM").html(Math.round(JG_S_S_SUM))
                 $("#JG_S_Q_SUM").html(Math.round(JG_S_Q_SUM))
 
@@ -275,7 +327,7 @@ function Main(){
  
                 ChartD2(last3mths_month,last3mths_D,LastMonthD,LastMonthD_Target)
                 ChartS2(last3mths_month,last3mths_S,LastMonthS,LastMonthS_Target)
-                ChartQ2(last3mths_month,last3mths_Q,LastMonthQ,LastMonthQ_Target)
+                ChartQ2(last3mths_month,last3mths_Q,LastMonthQ_Target)
 
                 for(var i=0;i<datas.all_daily_utility_usage_cur_month.length;i++){
                     var currentMonthD = Number(datas.all_daily_utility_usage_cur_month[i].energy_usage);
@@ -320,14 +372,24 @@ function Main(){
                 var sum2 = YearCurrently[1] ? ((YearEnergy_usage) / YearCurrently[1]) * 100 : 0;
                 $("#Sbfb1").html(Math.round(sum2) + "%");
 
-                var sum3 = YearCurrently[2] ? ((YearEnergy_usage) / YearCurrently[2]) * 100 : 0;
+                var sum3 = YearCurrently[2] ? ((YearAir_usage) / YearCurrently[2]) * 100 : 0;
                 $("#Qbfb1").html(Math.round(sum3)+ "%");
                 
             } else {
                 console.log("请求失败:", data.message);
             }
+             // 只在第一次加载时隐藏遮罩
+            if (isFirstLoad) {
+                hideEnergyDashboardLoading();
+                isFirstLoad = false;
+            }
         },
         error: function (err) { 
+            // 只在第一次加载失败时显示错误遮罩
+            if (isFirstLoad) {
+                failEnergyDashboardLoading();
+                isFirstLoad = false;
+            }  
             alert("请求失败！请检查数据采集盒接口是否正常！");
             console.log("请求错误:", err);
             console.log("状态码:", err.status);
@@ -609,6 +671,16 @@ function  ChartS1(Arr1,Arr2,Arr3){
 
 }
 function  ChartQ1(Arr1,Arr2,Arr3){
+        // 找到第一个 2026 的索引
+        const index2026 = Arr1.findIndex(item => item === 2026);
+        
+        // 如果找不到 2026，直接返回
+        if (index2026 === -1) return;
+        
+        // 只保留 2026 及之后的数据
+        const newArr1 = Arr1.slice(index2026);
+        const newArr2 = Arr2.slice(index2026);
+        const newArr3 = Arr3.slice(index2026);
         let myChart = echarts.init(document.getElementById('air_chart1'));
         
         let option = {
@@ -645,7 +717,7 @@ function  ChartQ1(Arr1,Arr2,Arr3){
             },
             xAxis: {
                 type: 'category',
-                data: Arr1,
+                data: newArr1,
                 // 小尺寸下 x 轴标签旋转或间隔显示
                 axisLabel: {
                     fontSize: 8,
@@ -684,7 +756,7 @@ function  ChartQ1(Arr1,Arr2,Arr3){
                     // 小尺寸下柱状图宽度适当减小，避免柱子之间过于拥挤
                     barWidth: '45%',
                     barGap: '20%',
-                    data: Arr2,
+                    data: newArr2,
                     label: {
                         show: true,
                         position: 'top',
@@ -715,7 +787,7 @@ function  ChartQ1(Arr1,Arr2,Arr3){
                     smooth: true,
                     symbol: 'circle',
                     symbolSize: 5,          // 小尺寸下折线点缩小
-                    data: Arr3,
+                    data: newArr3,
                     itemStyle: {
                         color: '#c23531',
                         borderColor: '#c23531',
@@ -1021,7 +1093,7 @@ function ChartS2(Arr1,Arr2,Arr3,Arr4){
         myChart.resize();
     }, 100);
 }
-function ChartQ2(Arr1,Arr2,Arr3,Arr4){
+function ChartQ2(Arr1,Arr2,Arr4){
     let myChart = echarts.init(document.getElementById('air_chart2'));
     
     let option = {
@@ -1031,7 +1103,7 @@ function ChartQ2(Arr1,Arr2,Arr3,Arr4){
             textStyle: { fontSize: 12 }
         },
         legend: {
-            data: [ '18年气量','实测气量', '目标气量'],  // 添加新的图例项
+            data: ['实测气量', '目标气量'],  // 添加新的图例项
             left: 'center',
             top: 0,
             itemWidth: 20,
@@ -1081,30 +1153,7 @@ function ChartQ2(Arr1,Arr2,Arr3,Arr4){
             }
         ],
         series: [
-            {
-                name: '18年气量',  // 新增的柱子
-                type: 'bar',
-                barWidth: '30%',
-                barGap: '10%',
-                data: Arr3,  // 计划电量数据，可以根据实际需求修改
-                label: {
-                    show: true,
-                    position: 'top',
-                    formatter: function(params) {
-                        return params.value;
-                    },
-                    fontWeight: 'bold',
-                    fontSize: 11,
-                    color: '#57a6ff',
-                    padding: [1, 2, 1, 2],
-                    borderRadius: 3,
-                    offset: [0, -2]
-                },
-                itemStyle: {
-                    borderRadius: [3, 3, 0, 0],
-                    color: '#57a6ff'  
-                }
-            },
+          
             {
                 name: '实测气量',
                 type: 'bar',

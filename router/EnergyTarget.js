@@ -980,7 +980,7 @@ router.get('/getAnnualTarget', async (req, res) => {
     try {
         const currentYear = new Date().getFullYear();
         const startYear = 2018;
-        const endYear = currentYear - 1;  // 当前年-1
+        const endYear = currentYear;  // 当前年-1
         
         let sql = `
             SELECT 

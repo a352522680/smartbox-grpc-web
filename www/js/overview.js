@@ -14,6 +14,33 @@ const LOADING_CONFIG = {
     skeletonColor: '#f0f0f0',
     animationDuration: '1.5s'
 };
+function fetchTargetValues() {
+    return $.ajax({
+        url: '/Engineering/targetValues',
+        type: 'GET',
+        dataType: 'json',
+        beforeSend: function(jqXHR) {
+            activeAjaxRequests.push(jqXHR);
+        },
+        complete: function(xhr) {
+            var index = activeAjaxRequests.indexOf(xhr);
+            if (index > -1) {
+                activeAjaxRequests.splice(index, 1);
+            }
+        },
+        success: function(res) {
+            if (res.success && res.data) {
+                targetValueMap = res.data;
+                console.log('TargetValue 映射已加载:', targetValueMap);
+            } else {
+                console.log('TargetValue 查询失败:', res.message);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.log('TargetValue 请求失败:', error);
+        }
+    });
+}
 
 // 获取查询时间范围（通用函数）
 function getQueryTimeRange() {
@@ -90,14 +117,16 @@ $(function() {
     
     console.log('查询时间范围:', Stime, '~', Etime);
     
-    // 先获取设备位置，创建div
-    getMachinePosition().then(function() {
+    // 先获取 TargetValue，再获取设备位置和效率数据
+    fetchTargetValues().then(function() {
+        // 获取设备位置，创建div
+        return getMachinePosition();
+    }).then(function() {
         // div创建完成后，再请求效率数据
         fetchEfficiencyData(Stime, Etime);
         // 启动定时刷新
         startAutoRefresh(Stime, Etime);
     });
-
     fitFloorplanToFrame();
     
 
@@ -469,9 +498,9 @@ function updateDeviceUI(device) {
     
     // 检查是否已经存在环形图，如果不存在则创建
     if ($targetDiv.find('.overview-tile-ring').length === 0) {
-        $targetDiv.prepend(`<span class="overview-tile-ring" aria-hidden="true">
-            <span class="overview-progress-ring overview-progress-ring-running"></span>
-            <span class="overview-progress-ring-value">${upTimePercent}</span>
+        $targetDiv.prepend(`<span class='overview-tile-ring' aria-hidden='true'>
+            <span class='overview-progress-ring overview-progress-ring-running'></span>
+            <span class='overview-progress-ring-value'>${upTimePercent}</span>
         </span>`);
     }
     
@@ -479,13 +508,18 @@ function updateDeviceUI(device) {
     $targetDiv.find('.overview-progress-ring-value').text(upTimePercent);
     
     // 根据利用率设置环形图颜色
+    var targetValue = targetValueMap[mid];
     var color;
-    if (percent >= 50) {
-        color = '#22c55e'; // 绿色
-    } else if (percent >= 40) {
-        color = '#eab308'; // 黄色
+    if (targetValue !== null && targetValue !== undefined) {
+        // 数据库有 TargetValue，按数据库判断
+        if (percent >= targetValue) {
+            color = '#22c55e'; // 绿色
+        } else {
+            color = '#eab308'; // 黄色
+        }
     } else {
-        color = '#ef4444'; // 红色
+        // 数据库没有 TargetValue 或没匹配到，用灰色
+        color = '#9ca3af'; // 灰色
     }
     // 更新环形图颜色
     $targetDiv.find('.overview-progress-ring-running').css('background', 

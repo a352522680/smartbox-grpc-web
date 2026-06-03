@@ -23,6 +23,7 @@ const routers5 = require("./router/ThreeHistory");
 const routers6 = require("./router/Energy");
 const routers7 = require("./router/ReadXLSX");
 const routers8 = require("./router/EnergyTarget"); 
+const routers9 = require("./router/Engineering"); 
 
 const { start } = require("pm2");
 
@@ -42,7 +43,7 @@ http.use('/ThreeHistory',routers5)
 http.use('/Energy',routers6)
 http.use('/ReadXLSX',routers7)
 http.use('/EnergyTarget', routers8); 
-
+http.use('/Engineering', routers9); 
  
 
 //本机ip
